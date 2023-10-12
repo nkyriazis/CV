@@ -26,9 +26,9 @@ jobs:
           
           - name: Generate new tag
             id: tag_gen
-            uses: anothrNick/github-tag-action@1.17.2
+            uses: anothrNick/github-tag-action@1.64.0
             with:
-                token: ${{ secrets.GITHUB_TOKEN }} 
+                token: ${{ secrets.GITHUB_TOKEN }}
 
           - name: Create Release
             id: create_release
