@@ -24,21 +24,25 @@ jobs:
               pdflatex cv
               pdflatex cv
           
-          - name: Generate new tag
-            id: tag_gen
-            uses: anothrNick/github-tag-action@1.64.0
-            with:
-                token: ${{ secrets.PAT }}
-                verbose: true
+          # - name: Generate new tag
+          #   id: tag_gen
+          #   uses: anothrNick/github-tag-action@1.64.0
+          #   with:
+          #       token: ${{ secrets.GITHUB_TOKEN }}
+          #       verbose: true
+
+          - name: Generate timestamp tag
+            id: timestamp_tag
+            run: echo "::set-output name=timestamp_tag::release-$(date +'%Y%m%d%H%M%S')"
 
           - name: Create Release
             id: create_release
             uses: actions/create-release@v1.0.0
             env:
-              GITHUB_TOKEN: ${{ secrets.PAT }}
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             with:
-              tag_name: ${{ steps.tag_gen.outputs.new_tag }}
-              release_name: ${{ steps.tag_gen.outputs.new_tag }}
+              tag_name: ${{ steps.timestamp_tag.outputs.timestamp_tag }}
+              release_name: ${{ steps.timestamp_tag.outputs.timestamp_tag }}
               draft: false
               prerelease: false
 
@@ -46,7 +50,7 @@ jobs:
             id: upload-release-asset 
             uses: actions/upload-release-asset@v1.0.1
             env:
-              GITHUB_TOKEN: ${{ secrets.PAT }}
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             with:
               upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
               asset_path: ./cv.pdf
