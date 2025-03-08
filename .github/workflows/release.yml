@@ -10,10 +10,41 @@ jobs:
           - name: Checkout code
             uses: actions/checkout@v4
 
+          - name: Cache Docker layers
+            uses: actions/cache@v2
+            with:
+              path: /tmp/latex-docker-image.tar
+              key: ${{ runner.os }}-docker-${{ hashFiles('**/*.tex') }}
+              restore-keys: |
+                ${{ runner.os }}-docker-
+
+          - name: Load Docker image from cache
+            if: steps.cache.outputs.cache-hit == 'true'
+            run: docker load -i /tmp/latex-docker-image.tar
+
+          - name: Build Docker image
+            if: steps.cache.outputs.cache-hit != 'true'
+            run: |
+              docker build -t latex-image .
+              docker save -o /tmp/latex-docker-image.tar latex-image
+
+          - name: Cache LaTeX build artifacts
+            uses: actions/cache@v2
+            with:
+              path: |
+                ~/.texlive
+                ./cv.aux
+                ./cv.log
+                ./cv.out
+              key: ${{ runner.os }}-latex-${{ hashFiles('**/*.tex') }}
+              restore-keys: |
+                ${{ runner.os }}-latex-
+
           - name: Build project
             uses: xu-cheng/latex-action@v2
             with:
               root_file: cv.tex
+              docker_image: latex-image
 
           - name: Generate timestamp tag
             id: timestamp_tag
