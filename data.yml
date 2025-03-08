@@ -174,7 +174,7 @@ experience:
       - Supervised by Associate Professor \href{mailto:as@ics.forth.gr}{A. Savidis} and Professor \href{mailto:cs@ics.forth.gr}{C. Stephanidis}.
       - Gained experience in problems and solutions behind product-oriented software engineering.
 
-  - title: "STARLIGHT\t\extit{: Design and development of a commercial platform for interactive electronic books for sighted, low-vision, and blind users}"
+  - title: "STARLIGHT\\textit{: Design and development of a commercial platform for interactive electronic books for sighted, low-vision, and blind users}"
     date: 1/2/2006 - 28/2/2010
     details:
       - Development of the book editor application, used to generate content for interactive electronic books.
@@ -275,3 +275,22 @@ languages:
   French:
     level: good
     justifications: [D.E.L.F.]
+acronyms:
+  CVRL: \href{http://www.ics.forth.gr/cvrl/}{Computer Vision and Robotics Laboratory}}
+  ICS: \href{http://www.ics.forth.gr/}{Institute of Computer Science}}
+  FORTH: \href{http://www.forth.gr/}{Foundation for Research and Technology -- Hellas}}
+  DRZ: \href{http://www.disneyresearch.com/research-labs/disney-research-zurich/} {Disney Research Zurich}}
+  HCI: \href{http://www.ics.forth.gr/hci/}{Human Computer Interface}}
+  RPC: Remote Procedure Call}
+  UOC: University of Crete}
+  CSD: Computer Science Department}
+  ECCV: European Conference on Computer Vision}
+  CVPR: Computer Vision and Pattern Recognition}
+  ICCV: International Conference on Computer Vision}
+  ICRA: International Conference on Robotics and Automation}
+  CVIU: Computer Vision and Image Understanding}
+  CAD: Computer-Aided Design}
+  CYB: Transactions on Cybernetics}
+  THMS: Transactions on Human-Machine Systems}
+  TPAMI: Transactions on Pattern Analysis and Machine Intelligence}
+  IJCV: International Journal of Computer Vision}
