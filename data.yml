@@ -187,43 +187,43 @@ impact:
     - "Most cited visual hand tracking paper of all time: ``Efficient model-based 3D tracking of hand articulations using Kinect.'' (\\num{1348} citations)"
 teaching:
   - title: Teaching assistant
-    date: \textbf{Spring 2006}, \textbf{Winter 2011}
+    date: Spring 2006, Winter 2011
     details:
       - Course: \href{http://www.csd.uoc.gr/~hy100}{CS100}
       - In the course titled ``Programming with the C language'' I\ was responsible for recitation, preparing programming exercises, and grading.
 
   - title: Teaching assistant
-    date: \textbf{Spring 2008}, \textbf{Spring 2009}, \textbf{Spring 2010}, \textbf{Spring 2011}, \textbf{Spring 2012}, \textbf{Spring 2013}
+    date: Spring 2008, Spring 2009, Spring 2010, Spring 2011, Spring 2012, Spring 2013
     details:
       - Course: \href{http://www.ics.forth.gr/~argyros/cs472.html}{CS472}
       - In the course titled ``Computer Vision'' I was responsible for recitation, exercise preparation, and students' project guidance.
 
   - title: Teaching assistant
-    date: \textbf{Winter 2009}
+    date: Winter 2009
     details:
       - Course: \href{http://elearn.uoc.gr/course/view.php?id=137}{CS387}
       - In the course titled ``Introduction to Artificial Intelligence'' I\ was responsible for recitation and exercise grading.
 
   - title: Teaching assistant
-    date: \textbf{Winter 2008}
+    date: Winter 2008
     details:
       - Course: \href{http://www.ics.forth.gr/~argyros/cs672.html}{CS672}
       - In the course titled ``Advanced Topics on Computer Vision'' I was responsible for recitation, exercise preparation, and students' project guidance.
 
   - title: Teaching assistant
-    date: \textbf{Spring 2007}, \textbf{Winter 2011}
+    date: Spring 2007, Winter 2011
     details:
       - Course: \href{http://www.csd.uoc.gr/~hy358}{CS358}
       - In the course titled ``Computer Graphics'' I was responsible for recitation, exercise administration, preparation of programming exercises, grading, and students' project guidance.
 
   - title: Teaching assistant
-    date: \textbf{Winter 2006}
+    date: Winter 2006
     details:
       - Course: \href{http://www.csd.uoc.gr/~hy475}{CS475}
       - In the course titled ``Autonomous Robot Navigation'' I was responsible for the definition of the students' project and the students' project guidance.
 
   - title: Teaching assistant
-    date: \textbf{Winter 2013}
+    date: Winter 2013
     details:
       - Course: \href{http://www.csd.uoc.gr/~hy471}{CS471}
       - In the course titled ``Digital Image Processing'' I was responsible for recitation, preparing programming exercises, and grading.
@@ -235,7 +235,7 @@ conference_organization:
       - Participation: Coordination and administration assistance, attendant
 
   - title: Eurographics 2008, the 29th annual conference of the European Association for Computer Graphics
-    date: 14/4/2008 - 18/4/2008}
+    date: 14/4/2008 - 18/4/2008
     details:
       - Hosted in Heraklion, Crete
       - Participation: Coordination and administration assistance, attendant
