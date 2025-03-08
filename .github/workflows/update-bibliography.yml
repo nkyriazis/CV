@@ -1,0 +1,78 @@
+name: Update Bibliography Artifact
+
+on:
+  # Run manually from the Actions tab
+  workflow_dispatch:
+
+  # Run on a schedule (monthly on the 1st at 00:00 UTC)
+  schedule:
+    - cron: '0 0 1 * *'
+
+jobs:
+  update-bibliography:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.4.2
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      - name: Install dependencies
+        run: |
+          poetry install
+
+      - name: Scrape new BibTeX entries
+        run: |
+          poetry run bib-scrape --url "https://users.ics.forth.gr/~argyros/publications.html" --output scraped.bib
+
+      # This step uses the GitHub API to download the previous artifact
+      # It overrides/deletes any existing artifacts with the same name
+      - name: Download previous bibliography artifact
+        uses: dawidd6/action-download-artifact@v2
+        continue-on-error: true
+        with:
+          name: argyros-bibliography
+          path: ./previous
+          workflow_conclusion: success
+          check_artifacts: true
+          if_no_artifact_found: warn
+
+      - name: Update bibliography with changelog
+        run: |
+          # Check if previous bibliography artifact exists
+          if [ -f "./previous/argyros-bibliography.bib" ]; then
+            poetry run bib-update \
+              --existing "./previous/argyros-bibliography.bib" \
+              --new-entries "scraped.bib" \
+              --output "argyros-bibliography.bib" \
+              --source-url "https://users.ics.forth.gr/~argyros/publications.html" \
+              --title "Argyros Publications"
+          else
+            poetry run bib-update \
+              --new-entries "scraped.bib" \
+              --output "argyros-bibliography.bib" \
+              --source-url "https://users.ics.forth.gr/~argyros/publications.html" \
+              --title "Argyros Publications"
+          fi
+
+      - name: Count entries
+        run: |
+          echo "Bibliography now has $(grep -c '@' argyros-bibliography.bib) entries"
+          
+      # This step will override any existing artifact with the same name
+      - name: Upload merged bibliography as a single persistent artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: argyros-bibliography
+          path: argyros-bibliography.bib
+          retention-days: 365  # Keep for a year

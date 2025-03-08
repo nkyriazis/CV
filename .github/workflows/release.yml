@@ -1,6 +1,10 @@
 name: Release CV
 
-on: [push]
+on:
+  push:
+    paths:
+      - cv.tex.j2
+      - data.yml
 
 jobs:
     build:

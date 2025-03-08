@@ -1,0 +1,57 @@
+[tool.poetry]
+name = "bibscraper"
+version = "0.1.0"
+description = "Tools for scraping, merging, and managing BibTeX bibliographies"
+authors = ["Claude <noreply@anthropic.com>"]
+readme = "README.md"
+license = "MIT"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Text Processing :: Markup :: LaTeX",
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+requests = "^2.31.0"
+beautifulsoup4 = "^4.12.2"
+python-levenshtein = "^0.21.1"
+clize = "^5.0.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.3.1"
+black = "^23.3.0"
+isort = "^5.12.0"
+mypy = "^1.3.0"
+
+[tool.poetry.scripts]
+bib-scrape = "bibscraper.cli:main_scrape"
+bib-merge = "bibscraper.cli:main_merge"
+bib-update = "bibscraper.cli:main_update"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.black]
+line-length = 88
+target-version = ["py37"]
+
+[tool.mypy]
+python_version = "3.7"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
