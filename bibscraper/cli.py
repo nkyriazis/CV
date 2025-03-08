@@ -1,33 +1,33 @@
 """
 Command-line interfaces for BibScraper tools.
 """
+
 import logging
 import sys
 from pathlib import Path
-from typing import Optional
 
 from clize import run
 
-from bibscraper.scraper.web import scrape_from_url
 from bibscraper.merger.bibtex_merger import merge_bibtex_files
+from bibscraper.scraper.web import scrape_from_url
 from bibscraper.updater import update_bibliography
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 
 def scrape_cli(*, url: str, output: str, verbose: bool = False):
     """
     Scrape BibTeX entries from a webpage.
-    
+
     :param url: URL of the webpage containing BibTeX entries
     :param output: Path to save the scraped entries
     :param verbose: Enable verbose output
     """
     if verbose:
         logger.setLevel(logging.DEBUG)
-    
+
     try:
         entries = scrape_from_url(url, Path(output))
         return 0
@@ -42,11 +42,11 @@ def merge_cli(
     file2: str,
     output: str,
     similarity_threshold: float = 0.8,
-    verbose: bool = False
+    verbose: bool = False,
 ):
     """
     Merge BibTeX files.
-    
+
     :param file1: Path to the first BibTeX file
     :param file2: Path to the second BibTeX file
     :param output: Path to save the merged entries
@@ -55,11 +55,10 @@ def merge_cli(
     """
     if verbose:
         logger.setLevel(logging.DEBUG)
-    
+
     try:
         merge_bibtex_files(
-            Path(file1), Path(file2), Path(output),
-            similarity_threshold, verbose
+            Path(file1), Path(file2), Path(output), similarity_threshold, verbose
         )
         return 0
     except Exception as e:
@@ -71,14 +70,14 @@ def update_cli(
     *,
     new_entries: str,
     output: str,
-    existing: Optional[str] = None,
+    existing: str = None,
     source_url: str = "https://users.ics.forth.gr/~argyros/publications.html",
     title: str = "Bibliography",
-    verbose: bool = False
+    verbose: bool = False,
 ):
     """
     Update bibliography with changelog.
-    
+
     :param new_entries: Path to new BibTeX entries
     :param output: Path to write updated bibliography
     :param existing: Path to existing bibliography (optional)
@@ -88,7 +87,7 @@ def update_cli(
     """
     if verbose:
         logger.setLevel(logging.DEBUG)
-    
+
     try:
         update_bibliography(
             Path(existing) if existing else None,
@@ -96,7 +95,7 @@ def update_cli(
             Path(output),
             source_url,
             title,
-            verbose
+            verbose,
         )
         return 0
     except Exception as e:
