@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+"""
+Script to scrape BibTeX entries from a webpage.
+"""
+import sys
+from bibscraper.cli import scrape_cli
+
+if __name__ == "__main__":
+    sys.exit(scrape_cli())

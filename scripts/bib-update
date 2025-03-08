@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+"""
+Script to update a bibliography with a changelog.
+"""
+import sys
+from bibscraper.cli import update_cli
+
+if __name__ == "__main__":
+    sys.exit(update_cli())
