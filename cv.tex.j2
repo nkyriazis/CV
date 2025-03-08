@@ -368,44 +368,10 @@ School of Sciences and Technology\\
 \endgroup
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                               MOTIVATION
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{comment}
-\section{Motivation}
-%
-%The most recent trend in Computer Vision (CV) is the employment of Machine Learning (ML) theory and tools. ML is incorporated so as to enhance the autonomy (auto-adjustment) of CV systems as well as their performance. ML itself is defined to be the ability of performance amelioration of a machine in an environment, that comes through observation and experiencing in general. Thus, in a manner, CV and ML can be thought of as complementary and co-beneficial. Therefore, the wide range of CV problems, that have gained the attention of a great part of the academia, has also lead to the generation or adaptation of a variety of ML tools, that target specifically these problems. From my point of view, the definition of a rich ML tool arsenal is essential when views of certain problems need to be examined or when the appropriateness of the tools incorporated needs to be ascertained.\\
-%
-%As a young researcher I have witnessed that, in most cases, the ability to solve problems well depends on the capableness to pose the right question, i.e. define the most appropriate objective function, and of course on the competence to optimize it. Both aspects raise a series of issues, upon which there is a need for spherical apprehension. Thus, when great problems, such as scene understanding, scene and knowledge representation and active learning, come into discussion there also comes a need for appropriate tools, such as learning methods, representations, relational models, reasoning methods and so on.\\
-
-
-The interest that drives me into participating in  \href{http://svg.dmi.unict.it/icvss2010/}{International Computer Vision Summer School} derives from my occupation with problems that are relevant to the published syllabus. My MSc thesis focuses on ML and targets the generic application of learning and incremental online representation building of knowledge for timely structured observable systems. I am very interested in the full variety of the matters in the syllabus and the reason I apply for this summer school, and hope to be accepted, is my belief that it will be ultimately beneficial for me. I am at the very start of my PhD and I look forward to be informed on the methods and tools listed, since the area I will be researching in is very strongly correlated to the most part of the lectures' and tutorials' content. To be more specific, during my immediate-future academic activities I will be researching scene understanding and interactive learning, by demonstration or experimentation.
-
-This year's ICVSS focuses on fundamental Computer Vision (CV) issues. I am very interested in participating in a summer school that would offer me both a broad view of the topics under consideration and the opportunity to attend lectures being carried out by the very innovators in the respective fields. I also look forward to the opportunity of direct discussion, not only with the distinguished speakers but also with other people (students, attendants etc.) that probably share the same research interests. This will hopefully provide me with better understanding, originating from different perspectives. Having attended ICVSS09 is also motivating, since I have experienced, first-hand, the high standards of this summer school series. Last ICVSS has been mostly beneficial for me and this is an important drive for applying for this year's summer school as well.
-
-
-\end{comment}
-
 \begin{acronym}
-  \acro{CVRL}{\href{http://www.ics.forth.gr/cvrl/}{Computer Vision and Robotics Laboratory}}
-  \acro{ICS}{\href{http://www.ics.forth.gr/}{Institute of Computer Science}}
-  \acro{FORTH}{\href{http://www.forth.gr/}{Foundation for Research and Technology -- Hellas}}
-  \acro{DRZ}{\href{http://www.disneyresearch.com/research-labs/disney-research-zurich/} {Disney Research Zurich}}
-  \acro{HCI}{\href{http://www.ics.forth.gr/hci/}{Human Computer Interface}}
-  \acro{RPC}{Remote Procedure Call}
-  \acro{UOC}{University of Crete}
-  \acro{CSD}{Computer Science Department}
-  \acro{ECCV}{European Conference on Computer Vision}
-  \acro{CVPR}{Computer Vision and Pattern Recognition}
-  \acro{ICCV}{International Conference on Computer Vision}
-  \acro{ICRA}{International Conference on Robotics and Automation}
-  \acro{CVIU}{Computer Vision and Image Understanding}
-  \acro{CAD}{Computer-Aided Design}
-  \acro{CYB}{Transactions on Cybernetics}
-  \acro{THMS}{Transactions on Human-Machine Systems}
-  \acro{TPAMI}{Transactions on Pattern Analysis and Machine Intelligence}
-  \acro{IJCV}{International Journal of Computer Vision}
+  %{ foreach acro, value in acronyms.items() %}
+        \acro{ {{- acro -}} }{ {{- value -}} }
+  %{ endfor %}
 \end{acronym}
 
 \end{document}
