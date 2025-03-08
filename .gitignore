@@ -1,0 +1,14 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.synctex.gz
+
+# Build directories
+_build/
+
+# Generated PDF - ignore if don't want to commit PDFs
+# *.pdf
