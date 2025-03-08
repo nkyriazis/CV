@@ -20,7 +20,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = ">=3.8.0,<4.0"
 requests = "^2.31.0"
 beautifulsoup4 = "^4.12.2"
 python-levenshtein = "^0.21.1"
