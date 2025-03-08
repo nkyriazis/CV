@@ -71,7 +71,7 @@ jobs:
           
       # This step will override any existing artifact with the same name
       - name: Upload merged bibliography as a single persistent artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: argyros-bibliography
           path: argyros-bibliography.bib
