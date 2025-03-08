@@ -7,18 +7,32 @@ jobs:
         name: Upload Release Asset
         runs-on: ubuntu-latest
         steps:
+          # Checkout the code
           - name: Checkout code
             uses: actions/checkout@v4
 
+          # install jinja2 and pyaml
+          - name: Install dependencies
+            run: |
+              python -m pip install --upgrade pip
+              pip install jinja2 pyaml
+
+          # instantiate template on data
+          - name: Generate cv.tex
+            run: python latex_jinja_applier.py --template cv.tex.j2 --context data.yml --output cv.tex
+
+          # Build the project
           - name: Build project
             uses: xu-cheng/latex-action@v2
             with:
               root_file: cv.tex
 
+          # Timestamp tag
           - name: Generate timestamp tag
             id: timestamp_tag
             run: echo "::set-output name=timestamp_tag::release-$(date +'%Y%m%d%H%M%S')"
 
+          # Create a release
           - name: Create Release
             id: create_release
             uses: actions/create-release@v1.0.0
@@ -30,6 +44,7 @@ jobs:
               draft: false
               prerelease: false
 
+          # Upload a release asset
           - name: Upload Release Asset
             id: upload-release-asset 
             uses: actions/upload-release-asset@v1.0.1
