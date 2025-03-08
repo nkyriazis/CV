@@ -276,21 +276,21 @@ languages:
     level: good
     justifications: [D.E.L.F.]
 acronyms:
-  CVRL: \href{http://www.ics.forth.gr/cvrl/}{Computer Vision and Robotics Laboratory}}
-  ICS: \href{http://www.ics.forth.gr/}{Institute of Computer Science}}
-  FORTH: \href{http://www.forth.gr/}{Foundation for Research and Technology -- Hellas}}
-  DRZ: \href{http://www.disneyresearch.com/research-labs/disney-research-zurich/} {Disney Research Zurich}}
-  HCI: \href{http://www.ics.forth.gr/hci/}{Human Computer Interface}}
-  RPC: Remote Procedure Call}
-  UOC: University of Crete}
-  CSD: Computer Science Department}
-  ECCV: European Conference on Computer Vision}
-  CVPR: Computer Vision and Pattern Recognition}
-  ICCV: International Conference on Computer Vision}
-  ICRA: International Conference on Robotics and Automation}
-  CVIU: Computer Vision and Image Understanding}
-  CAD: Computer-Aided Design}
-  CYB: Transactions on Cybernetics}
-  THMS: Transactions on Human-Machine Systems}
-  TPAMI: Transactions on Pattern Analysis and Machine Intelligence}
-  IJCV: International Journal of Computer Vision}
+  CVRL: \href{http://www.ics.forth.gr/cvrl/}{Computer Vision and Robotics Laboratory}
+  ICS: \href{http://www.ics.forth.gr/}{Institute of Computer Science}
+  FORTH: \href{http://www.forth.gr/}{Foundation for Research and Technology -- Hellas}
+  DRZ: \href{http://www.disneyresearch.com/research-labs/disney-research-zurich/} {Disney Research Zurich}
+  HCI: \href{http://www.ics.forth.gr/hci/}{Human Computer Interface}
+  RPC: Remote Procedure Call
+  UOC: University of Crete
+  CSD: Computer Science Department
+  ECCV: European Conference on Computer Vision
+  CVPR: Computer Vision and Pattern Recognition
+  ICCV: International Conference on Computer Vision
+  ICRA: International Conference on Robotics and Automation
+  CVIU: Computer Vision and Image Understanding
+  CAD: Computer-Aided Design
+  CYB: Transactions on Cybernetics
+  THMS: Transactions on Human-Machine Systems
+  TPAMI: Transactions on Pattern Analysis and Machine Intelligence
+  IJCV: International Journal of Computer Vision

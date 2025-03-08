@@ -369,9 +369,9 @@ School of Sciences and Technology\\
 
 
 \begin{acronym}
-  %{ foreach acro, value in acronyms.items() %}
+  {% for acro, value in acronyms.items() %}
         \acro{ {{- acro -}} }{ {{- value -}} }
-  %{ endfor %}
+  {% endfor %}
 \end{acronym}
 
 \end{document}
