@@ -82,7 +82,7 @@
 \usepackage[a4paper]{geometry}
 
 % for example, change the margins to 2 inches all round
-\geometry{top=1.75cm, bottom=-.6cm, left=1.5cm, right=1.5cm}
+\geometry{top=1.5cm, bottom=1.5cm, left=1.5cm, right=1.5cm}
 
 %use customized header
 \usepackage{fancyhdr}
@@ -226,7 +226,7 @@
         \colorbox{sectcol}{\mystrut \makebox[1\linewidth][l]{
                         \larrow{bgcol} \hspace{-8pt} \larrow{bgcol} \hspace{-8pt} \larrow{bgcol} \textcolor{white}{\textbf{#1}}\hspace{4pt}
                 }}\\
-        \nopagebreak[4]
+        \nopagebreak
 }
 
 %create a coloured arrow with title as cv meta section section
@@ -234,7 +234,7 @@
 %
 \newcommand{\metasection}[2]
 {
-\begin{tabular*}{\textwidth}{p{2.2cm}p{11cm}}
+\begin{tabular*}{\textwidth}{p{2.4cm}p{11cm}}
         \larrow{bgcol}\normalsize{\textcolor{sectcol}{#1:}} & #2 \\[12pt]
 \end{tabular*}
 }
@@ -256,19 +256,21 @@
 {% endmacro %}
 
 {% macro cv_event(event) %}
-\vspace{8pt}
-\begin{tabular*}{1\textwidth}{p{2.3cm}  p{8.8cm} x{5.9cm}}
-        \textcolor{bgcol}{ {{- event.date -}} }& \textbf{ {{- event.title -}} } & \vspace{2.5pt}\textcolor{sectcol}{ {{- event.location -}} }
+\begin{samepage}
+        \vspace{8pt}
+        \begin{tabular*}{1\textwidth}{p{2.3cm}  p{8.8cm} x{5.9cm}}
+                \textcolor{bgcol}{ {{- event.date -}} }& \textbf{ {{- event.title -}} } & \vspace{2.5pt}\textcolor{sectcol}{ {{- event.location -}} }
 
-\end{tabular*}
-\vspace{-12pt}
-\textcolor{softcol}{\hrule}
-\vspace{6pt}
-\begin{tabular*}{1\textwidth}{p{2.3cm} p{14.4cm}}
-        {% for detail in event.details -%}
-        &		 \larrow{bgcol} {{- show_detail(detail) -}}\\[3pt]
-        {% endfor -%}
-\end{tabular*}
+        \end{tabular*}
+        \vspace{-12pt}
+        \textcolor{softcol}{\hrule}
+        \vspace{6pt}
+        \begin{tabular*}{1\textwidth}{p{2.3cm} p{14.4cm}}
+                {% for detail in event.details -%}
+                &		 \larrow{bgcol} {{- show_detail(detail) -}}\\[3pt]
+                {% endfor -%}
+        \end{tabular*}
+\end{samepage}
 {% endmacro %}
 
 {% raw %}
@@ -474,11 +476,10 @@
 %----------------------------------------------------------------------------------------
 \cvsection{Reviewer Duty}
 
-\larrow{bgcol} Invited and performed reviews for the following journals:
-{% endraw %}{{ ', '.join(review_journals) }}{% raw %}.
-\\[6pt]
-\larrow{bgcol} Invited and performed reviews for the following conferences:
-{% endraw %}{{ ', '.join(review_conferences) }}{% raw %}.
+{% endraw %}
+\metasection{Journals}{ {{ ', '.join(review_journals) }} }
+\metasection{Conferences}{ {{ ', '.join(review_conferences) }} }
+{% raw %}
 
 %---------------------------------------------------------------------------------------
 %	LANGUAGES
