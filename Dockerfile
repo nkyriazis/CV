@@ -26,15 +26,11 @@ RUN poetry config virtualenvs.create false
 # Production stage
 FROM base as production
 
-# Copy the pyproject.toml and poetry.lock files
-COPY pyproject.toml poetry.lock* /workspace/
-
+# Copy everything to /workspace
+COPY . /workspace
 
 # Install dependencies
 RUN poetry install
-
-# Copy the rest of the application code
-COPY . /workspace
 
 # Set the entrypoint to bash
 ENTRYPOINT ["/bin/bash"]
