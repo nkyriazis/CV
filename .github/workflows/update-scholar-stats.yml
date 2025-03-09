@@ -22,12 +22,16 @@ jobs:
       - name: Check for changes
         id: check_changes
         run: |
-          if git diff --quiet; then
-            echo "No changes detected" > no_changes.txt
+          if git diff --quiet data.yml; then
+            echo "no_changes=true" >> $GITHUB_ENV
+            echo "::set-output name=no_changes::true"
+          else
+            echo "no_changes=false" >> $GITHUB_ENV
+            echo "::set-output name=no_changes::false"
           fi
 
       - name: Commit changes
-        if: steps.check_changes.outputs.no_changes != 'true'
+        if: steps.check_changes.outputs.no_changes == 'false'
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -48,7 +52,7 @@ jobs:
             return pullRequests.length > 0;
 
       - name: Create Pull Request
-        if: steps.check_changes.outputs.no_changes != 'true' && steps.check_pr.outputs.result != 'true'
+        if: steps.check_changes.outputs.no_changes == 'false' && steps.check_pr.outputs.result != 'true'
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
