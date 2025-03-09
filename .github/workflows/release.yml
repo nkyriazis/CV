@@ -7,59 +7,47 @@ on:
       - data.yml
 
 jobs:
-    build:
-        name: Upload Release Asset
-        runs-on: ubuntu-latest
-        steps:
-          # Checkout the code
-          - name: Checkout code
-            uses: actions/checkout@v4
+  build:
+    name: Upload Release Asset
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-          # install jinja2 and pyaml
-          - name: Install dependencies
-            run: |
-              python -m pip install --upgrade pip
-              pip install jinja2 pyaml
+      # Login to github's container registry
+      - name: Login to GitHub Container Registry
+        run: echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-          # instantiate template on data
-          - name: Generate cv.tex
-            run: python latex_jinja_applier.py --template cv.tex.j2 --context data.yml --output cv.tex
+      # Run build
+      - name: Build the CV
+        run: ./scripts/run.sh ./build.sh
 
-          # check that the file was correctly generated
-          - name: Check cv.tex
-            run: cat cv.tex
+      # Timestamp tag
+      - name: Generate timestamp tag
+        id: timestamp_tag
+        run: echo "::set-output name=timestamp_tag::release-$(date +'%Y%m%d%H%M%S')"
 
-          # Build the project
-          - name: Build project
-            uses: xu-cheng/latex-action@v2
-            with:
-              root_file: cv.tex
+      # Create a release
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.timestamp_tag.outputs.timestamp_tag }}
+          release_name: ${{ steps.timestamp_tag.outputs.timestamp_tag }}
+          draft: false
+          prerelease: false
 
-          # Timestamp tag
-          - name: Generate timestamp tag
-            id: timestamp_tag
-            run: echo "::set-output name=timestamp_tag::release-$(date +'%Y%m%d%H%M%S')"
-
-          # Create a release
-          - name: Create Release
-            id: create_release
-            uses: actions/create-release@v1.0.0
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            with:
-              tag_name: ${{ steps.timestamp_tag.outputs.timestamp_tag }}
-              release_name: ${{ steps.timestamp_tag.outputs.timestamp_tag }}
-              draft: false
-              prerelease: false
-
-          # Upload a release asset
-          - name: Upload Release Asset
-            id: upload-release-asset 
-            uses: actions/upload-release-asset@v1.0.1
-            env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            with:
-              upload_url: ${{ steps.create_release.outputs.upload_url }}
-              asset_path: ./cv.pdf
-              asset_name: cv.pdf
-              asset_content_type: application/pdf
+      # Upload a release asset
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./cv.pdf
+          asset_name: cv.pdf
+          asset_content_type: application/pdf
