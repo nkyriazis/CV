@@ -1,0 +1,38 @@
+{
+    "name": "BibScraper Dev Container",
+    "build": {
+        "dockerfile": "../Dockerfile",
+        "context": "..",
+        "args": {
+            "SELECT": "base"
+        }
+    },
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.pythonPath": "/usr/local/bin/python"
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-azuretools.vscode-docker",
+                "ms-python.black",
+                "ms-toolsai.jupyter",
+                "magicstack.MagicPython",
+                "esbenp.prettier-vscode",
+                "dbaeumer.vscode-eslint",
+                "streetsidesoftware.code-spell-checker",
+                "eamodio.gitlens",
+                "ms-vscode.cpptools",
+                "redhat.vscode-yaml",
+                "ms-vscode.Go",
+                "rust-lang.rust",
+                "github.vscode-github-actions"
+            ]
+        }
+    },
+    "mounts": [
+        "source=${localWorkspaceFolder},target=/workspace,type=bind"
+    ]
+}
