@@ -1,9 +1,18 @@
 ---
 personal_info:
+  name: Dr. Nikolaos Kyriazis
+  title: Senior Computer Vision Engineer
+  location: Greece
   birth_place: Athens
   citizenship: Greek
   email: nkyriazis@gmail.com
   image_path: avatar.png
+  highlights:
+    Education: \ac{UOC} Ph.D., M.Sc., and B.Sc. with a strong focus on Computer Vision and Machine Learning.
+    Experience: Proven track record in Academia, Industry, and Startups with significant research and innovation contributions.
+    Expertise: Human Centric Computer Vision, Machine Learning, Spatial Computing, and advanced imaging technologies. Seasoned coder that ``gets into the weeds''.
+  summary: >
+    Accomplished Senior Computer Vision Engineer with multidisciplinary expertise and a proven track record in driving innovative research in academia and industry.
 research_interests:
   - Human Centric Computer Vision
   - Machine Learning
@@ -15,168 +24,188 @@ research_interests:
   - Computer Graphics
   - Optimization Theory.
 invited_talks:
-  - title: ORamaVR
+  - title: \href{https://oramavr.com/}{ORamaVR}
     date: 17/7/2020
+    location: Switzerland (Virtual)
     details:
     - Host: Associate Prof. George Papagiannakis (\ac{CSD}, \ac{UOC}), CEO/CTO/Co-founder
-    - Location: Switzerland (Virtual)
     - Subject: Product-driven workflows, CI/CD
-  - title: Max Planck Institute for Intelligent Systems (MPI)
+
+  - title: \href{https://www.tuebingen.mpg.de/84502/mpi-fuer-intelligente-systeme}{Max Planck Institute for Intelligent Systems (MPI)}
     date: 27/11/2014
+    location: T\"ubingen
     details:
     - Host: Assistant Prof. Jeanette Bohg (Stanford)
-    - Location: T\"ubingen
     - Subject: Computational methods for observing and understanding the interaction of human and robotic systems with objects of their environment
 awards:
-  - title: Research award from Facebook Reality Labs
-    date: 23/1/2020
+  - title: Research award from \href{https://tech.facebook.com/reality-labs/}{Facebook Reality Labs}
+    date: 2020
+    location: Meta\textsuperscript{TM}
     details:
       - Awarded on the basis of the impact of work on human-computer interactions
       - Award: Research gift (grant)
 
-  - title: NVidia hardware grant
-    date: 16/1/2019
+  - title: \href{https://www.nvidia.com/}{NVidia} hardware grant
+    date: 2019
+    location: NVidia\textsuperscript{TM}
     details:
       - Call: NVidia GPU\ grant
       - Proposal: High-fidelity simulation of image formation and pushing the envelope in Deep-Learning-based 3D hand estimation through analysis by synthesis
       - Award: NVidia Titan V GPU
 
-  - title: NVidia hardware grant
-    date: 9/8/2014
+  - title: \href{https://www.nvidia.com/}{NVidia} hardware grant
+    date: 2014
+    location: NVidia\textsuperscript{TM}
     details:
       - Call: Tegra\textregistered~K1 CUDA Hardware Donation Program for Researchers
       - Proposal: CUDA-enabled model-based framework on embedded systems
       - Award: NVidia Jetson TK1 DevKit
 
   - title: Ph.D. with Honors
-    date: 14/6/2014
+    date: 2014
+    location: \ac{CSD}, \ac{UOC}
     details:
       - Awarded Ph.D. with honors, by unanimous vote of the examination committee.
 
   - title: Young Researcher Award 2012--2013
-    date: 15/7/2013
+    date: 2013
+    location: \ac{UOC}
     details:
       - Sponsored by the University of Crete.
       - Awarded to the top-performing graduate student (MSc, PhD) across all departments of the five schools which comprise the University of Crete.
 
   - title: 1st Prize in \href{http://sites.google.com/a/chalearn.org/gesturechallenge}{ChaLearn Gesture Challenge 2012}
-    date: 11/11/2012
+    date: 2012
+    location: Japan
     details:
       - Sponsored by Microsoft, Redmond, USA.
       - Awarded in the Demo\ Competition of the Qualitative Evaluation track, for the best gesture recognition demo.
       - Hosted in Tsukuba, Japan in conjunction with ICPR 2012 (Gesture Recognition Workshop).
 education:
   - degree: Ph.D.
-    title: \href{http://www.csd.uoc.gr/}{\ac{CSD}, \ac{UOC}}
+    title: \ac{CSD}, \ac{UOC}
     date: 14/6/2014
+    location: Crete, Greece
     details:
       - Thesis: Computational methods for observing and understanding the interaction of human and robotic systems with objects of their environment
       - Supervisor: \href{http://www.ics.forth.gr/~argyros}{Professor Antonis Argyros}
       - Area of Study: Computer Vision
 
   - degree: M.Sc.
-    title: \href{http://www.csd.uoc.gr/}{\ac{CSD}, \ac{UOC}}
+    title: \ac{CSD}, \ac{UOC}
     date: 1/4/2009
+    location: Crete, Greece
     details:
       - Thesis: Context Free Grammar Induction via Observation of Structured Time Processes
       - Supervisor: \href{http://www.ics.forth.gr/~argyros}{Associate Professor Antonis Argyros}
       - Area of Study: Machine Learning, Computer Vision
 
   - degree: B.Sc.
-    title: \href{http://www.csd.uoc.gr/}{\ac{CSD}, \ac{UOC}}
+    title: \ac{CSD}, \ac{UOC}
     date: 1/2/2006
+    location: Crete, Greece
     details:
-      - Specialization in Software Engineering and Information Systems
-      - Minor in Information Systems
+      - Specialization: Software Engineering and Information Systems
+      - Minor: Information Systems
 experience:
   - title: Co-founder and CEO
-    date: 5/9/2023 - Present
+    date: 2023 - now
+    location: \href{https://www.sceneopsis.com}{SceneOpsis}
     details:
-      - Organization: \href{https://www.sceneopsis.com}{SceneOpsis}
       - Leading the democratization of spatial computing for the proliferation of remote appreciation.
       - Involved in operations and pushing the envelope on contemporary structure for motion, photogrammetry, and novel view synthesis (radiance fields).
-      - Skillset and responsibilities:
-        - Leadership and management
-        - End-to-end tooling (full-stack development)
-        - 3D development (Unity)
-        - Mobile XR development
-        - Deep understanding of Computer Vision and AI
-        - Deployment in the cloud
-        - Stakeholder engagement
-        - Fundraising
+      - Skillset and responsibilities: |
+          Leadership and management,
+          End-to-end tooling (full-stack development),
+          3D development (Unity),
+          Mobile XR development,
+          Deep understanding of Computer Vision and AI,
+          Deployment in the cloud,
+          Stakeholder engagement,
+          Fundraising
 
   - title: Senior Computer Vision Engineer
-    date: 1/2/2019 - 24/3/2024
+    date: 2019 - 2024
+    location: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
     details:
-      - Organization: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
       - Conducted and published research in the field of Computer Vision, regarding 3D tracking of hands and objects in interaction.
       - Research was conducted in and supported by EU-funded projects, under the supervision and with the collaboration of Professor A. Argyros.
 
   - title: Computer Vision Engineer
-    date: 16/4/2017 - 17/1/2019
+    date: 2017 - 2019
+    location: Oculus VR--Meta\textsuperscript{TM}
     details:
-      - Organization: Oculus VR--Meta\textsuperscript{TM}
       - Pushed the envelope in real-time robust 3D hand tracking, in the context of Virtual Reality (VR), combining deep-learning and model-based methods.
 
   - title: Postdoctoral researcher
-    date: 15/6/2014 - 21/12/2016
+    date: 2014 - 2016
+    location: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
     details:
-      - Organization: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
       - Conducted and published research in the field of Computer Vision, regarding 3D tracking of hands and objects in interaction.
       - Research was conducted in and supported by EU-funded projects, under the supervision and with the collaboration of Professor A. Argyros.
 
   - title: Internship
-    date: 1/10/2013 - 21/12/2013
+    date: 2013
+    location: \ac{DRZ}
     details:
-      - Organization: \ac{DRZ}
       - Contributed in acquisition and representation of real-world data, towards the development of algorithms that leverage this data to generate stunning visual effects.
       - Supervised by \href{mailto:thabo.beeler@disneyresearch.com}{Dr. Thabo Beeler}, in the \href{http://www.disneyresearch.com/research-labs/disney-research-zurich/dr-zurich-capture-effects/}{Capture \& Effects} laboratory.
       - Gained experience in new tools and methodologies regarding high-fidelity performance capture.
 
   - title: Scholarship
-    date: 1/9/2006 - 14/6/2014
+    date: 2006 - 2014
+    location: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
     details:
-      - Organization: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
       - Postgraduate scholarships covering M.Sc. and Ph.D. studies.
       - Conducted and published research in Computer Vision and Machine Learning, focusing on 3D tracking of hands and objects in interaction and grammar induction.
       - Research was conducted in and supported by EU-funded projects, under the supervision and with the collaboration of Professor A. Argyros.
 
-  - title: "\\href{http://rapid-project.eu/}{RAPID: }\\textit{Heterogeneous Secure Multi-level Remote Acceleration Service for Low-Power Integrated Systems and Devices}"
-    date: 1/1/2015 - 31/12/2016
+  - title: \href{http://rapid-project.eu/}{RAPID}
+    date: 2015 - 2016
+    location: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
     details:
+      - Title: \textit{Heterogeneous Secure Multi-level Remote Acceleration Service for Low-Power Integrated Systems and Devices}
       - Assistance in proposal preparation.
       - Work on providing a client-server distributed decomposition of the standalone 3D hand tracking application developed by \ac{CVRL}.
       - "Two implementations were provided, for comparison: a custom one based on basic \\ac{RPC} and one based on the proposed RAPID infrastructure."
 
-  - title: "\\href{http://www.wearhap.eu/}{WEARHAP: }\\textit{Wearable Haptics for Humans and Robots}"
-    date: 1/3/2013 - 31/12/2016
+  - title: \href{http://www.wearhap.eu/}{WEARHAP}
+    date: 2013 - 2016
+    location: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
     details:
+      - Title: \textit{Wearable Haptics for Humans and Robots}
       - Assistance in proposal preparation.
       - Work on hand pose estimation based on dimensionality reduction.
 
-  - title: "\\href{http://robohow.eu/}{RoboHow.cog: }\\textit{Web-enabled and Experience-based Cognitive Robots that Learn Complex Everyday Manipulation Tasks}"
-    date: 1/2/2012 - 31/5/2016
+  - title: \href{http://robohow.eu/}{RoboHow.cog}
+    date: 2012 - 2016
+    location: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
     details:
+      - Title: \textit{Web-enabled and Experience-based Cognitive Robots that Learn Complex Everyday Manipulation Tasks}
       - Assistance in proposal preparation.
       - Observation of human demonstrations, extraction, and symbolic representation of information.
 
-  - title: "\\href{http://www.grasp-project.eu/}{GRASP: }\\textit{Emergence of Cognitive Grasping through Introspection, Emulation and Surprise (IST-FP7-IP-215821)}"
-    date: 1/9/2007 - 29/2/2012
+  - title: \href{http://www.grasp-project.eu/}{GRASP}
+    date: 2007 - 2012
+    location: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
     details:
+      - Title: \textit{Emergence of Cognitive Grasping through Introspection, Emulation and Surprise}
       - 3D hand tracking from various visual sensing modalities.
 
   - title: Scholarship
-    date: 1/9/2005 - 30/9/2006
+    date: 2005 - 2006
+    location: \ac{HCI}, \ac{ICS}, \ac{FORTH}
     details:
-      - Organization: \ac{HCI}, \ac{ICS}, \ac{FORTH}
       - Undergraduate and postgraduate scholarships.
       - Studied and applied Software Engineering in the context of developing and shipping universally accessible software.
       - Supervised by Associate Professor \href{mailto:as@ics.forth.gr}{A. Savidis} and Professor \href{mailto:cs@ics.forth.gr}{C. Stephanidis}.
       - Gained experience in problems and solutions behind product-oriented software engineering.
 
-  - title: "STARLIGHT\\textit{: Design and development of a commercial platform for interactive electronic books for sighted, low-vision, and blind users}"
-    date: 1/2/2006 - 28/2/2010
+  - title: STARLIGHT
+    date: 2006 - 2010
+    location: \ac{HCI}, \ac{ICS}, \ac{FORTH}
     details:
+      - Title: \textit{Design and development of a commercial platform for interactive electronic books for sighted, low-vision, and blind users}
       - Development of the book editor application, used to generate content for interactive electronic books.
 impact:
   google_scholar:
@@ -184,73 +213,76 @@ impact:
     citations: 2824
     h_index: 13
   details:
-    - "Most cited visual hand tracking paper of all time: ``Efficient model-based 3D tracking of hand articulations using Kinect.'' (\\num{1348} citations)"
+    - Impact: "Most cited visual hand tracking paper of all time: ``Efficient model-based 3D tracking of hand articulations using Kinect.'' (\\num{1348} citations)"
 teaching:
   - title: Teaching assistant
-    date: Spring 2006, Winter 2011
+    date: 2006, 2011
     details:
       - Course: \href{http://www.csd.uoc.gr/~hy100}{CS100}
       - In the course titled ``Programming with the C language'' I\ was responsible for recitation, preparing programming exercises, and grading.
 
   - title: Teaching assistant
-    date: Spring 2008, Spring 2009, Spring 2010, Spring 2011, Spring 2012, Spring 2013
+    date: 2008 - 2013
     details:
       - Course: \href{http://www.ics.forth.gr/~argyros/cs472.html}{CS472}
       - In the course titled ``Computer Vision'' I was responsible for recitation, exercise preparation, and students' project guidance.
 
   - title: Teaching assistant
-    date: Winter 2009
+    date: 2009
     details:
       - Course: \href{http://elearn.uoc.gr/course/view.php?id=137}{CS387}
       - In the course titled ``Introduction to Artificial Intelligence'' I\ was responsible for recitation and exercise grading.
 
   - title: Teaching assistant
-    date: Winter 2008
+    date:  2008
     details:
       - Course: \href{http://www.ics.forth.gr/~argyros/cs672.html}{CS672}
       - In the course titled ``Advanced Topics on Computer Vision'' I was responsible for recitation, exercise preparation, and students' project guidance.
 
   - title: Teaching assistant
-    date: Spring 2007, Winter 2011
+    date: 2007, 2011
     details:
       - Course: \href{http://www.csd.uoc.gr/~hy358}{CS358}
       - In the course titled ``Computer Graphics'' I was responsible for recitation, exercise administration, preparation of programming exercises, grading, and students' project guidance.
 
   - title: Teaching assistant
-    date: Winter 2006
+    date: 2006
     details:
       - Course: \href{http://www.csd.uoc.gr/~hy475}{CS475}
       - In the course titled ``Autonomous Robot Navigation'' I was responsible for the definition of the students' project and the students' project guidance.
 
   - title: Teaching assistant
-    date: Winter 2013
+    date: 2013
     details:
       - Course: \href{http://www.csd.uoc.gr/~hy471}{CS471}
       - In the course titled ``Digital Image Processing'' I was responsible for recitation, preparing programming exercises, and grading.
 conference_organization:
-  - title: ECCV 2010, 11th European Conference on Computer Vision
-    date: 5/9/2010 - 11/9/2010
+  - title: ECCV 2010
+    date: 2010
+    location: Crete, Greece
     details:
       - Hosted in Hersonissos, Crete, Greece
       - Participation: Coordination and administration assistance, attendant
 
-  - title: Eurographics 2008, the 29th annual conference of the European Association for Computer Graphics
-    date: 14/4/2008 - 18/4/2008
+  - title: Eurographics 2008
+    date: 2008
+    location: Crete, Greece
     details:
       - Hosted in Heraklion, Crete
       - Participation: Coordination and administration assistance, attendant
 summer_schools:
-  - title: ICVSS 09, International Computer Vision Summer School
-    date: 6/7/2009 - 11/7/2009
+  - title: ICVSS 09
+    date: 2009
+    location: Sicily, Italy
     details:
-      - Hosted in Sicily, Italy
       - Participation: Attendant
       - Renumeration: 2nd best grade in the final examinations
 
-  - title: "The Onassis Foundation science lecture series: \\textit{Robots Intelligently Interacting With People}"
-    date: 24/7/2006 - 28/7/2006
+  - title: The Onassis Foundation science lecture series
+    date: 2006
+    location: Crete, Greece
     details:
-      - Hosted in Heraklion, Crete
+      - Theme: \textit{Robots Intelligently Interacting With People}
       - Participation: Attendant
 review_journals:
   - \ac{CVIU} -- Elsevier
@@ -259,7 +291,7 @@ review_journals:
   - IEEE \ac{THMS}
   - IEEE \ac{TPAMI}
   - \ac{IJCV} -- Springer
-review_conference:
+review_conferences:
   - \ac{ECCV}
   - IEEE/CVF \ac{CVPR}
   - IEEE/CVF \ac{ICCV}
@@ -269,28 +301,63 @@ languages:
   Greek:
     level: excellent
     justifications: [native speaker]
-  Englush:
+  English:
     level: excellent
     justifications: [full professional proficiency, Michican Proficiency Certificate]
   French:
     level: good
     justifications: [D.E.L.F.]
 acronyms:
-  CVRL: \href{http://www.ics.forth.gr/cvrl/}{Computer Vision and Robotics Laboratory}
-  ICS: \href{http://www.ics.forth.gr/}{Institute of Computer Science}
-  FORTH: \href{http://www.forth.gr/}{Foundation for Research and Technology -- Hellas}
-  DRZ: \href{http://www.disneyresearch.com/research-labs/disney-research-zurich/} {Disney Research Zurich}
-  HCI: \href{http://www.ics.forth.gr/hci/}{Human Computer Interface}
-  RPC: Remote Procedure Call
-  UOC: University of Crete
-  CSD: Computer Science Department
-  ECCV: European Conference on Computer Vision
-  CVPR: Computer Vision and Pattern Recognition
-  ICCV: International Conference on Computer Vision
-  ICRA: International Conference on Robotics and Automation
-  CVIU: Computer Vision and Image Understanding
-  CAD: Computer-Aided Design
-  CYB: Transactions on Cybernetics
-  THMS: Transactions on Human-Machine Systems
-  TPAMI: Transactions on Pattern Analysis and Machine Intelligence
-  IJCV: International Journal of Computer Vision
+  CVRL:
+    url: http://www.ics.forth.gr/cvrl/
+    fullname: Computer Vision and Robotics Laboratory
+  ICS:
+    url: http://www.ics.forth.gr/
+    fullname: Institute of Computer Science
+  FORTH:
+    url: http://www.forth.gr/
+    fullname: Foundation for Research and Technology — Hellas
+  DRZ:
+    url: http://www.disneyresearch.com/research-labs/disney-research-zurich/
+    fullname: Disney Research Zurich
+  HCI:
+    url: http://www.ics.forth.gr/hci/
+    fullname: Human-Computer Interface
+  RPC:
+    fullname: Remote Procedure Call
+  UOC:
+    url: http://www.uoc.gr
+    fullname: University of Crete
+  CSD:
+    url: http://www.csd.uoc.gr
+    fullname: Computer Science Department
+  ECCV:
+    fullname: European Conference on Computer Vision
+  CVPR:
+    fullname: Computer Vision and Pattern Recognition
+  ICCV:
+    fullname: International Conference on Computer Vision
+  ICRA:
+    fullname: International Conference on Robotics and Automation
+  CVIU:
+    fullname: Computer Vision and Image Understanding
+  CAD:
+    fullname: Computer-Aided Design
+  CYB:
+    fullname: Transactions on Cybernetics
+  THMS:
+    fullname: Transactions on Human-Machine Systems
+  TPAMI:
+    fullname: Transactions on Pattern Analysis and Machine Intelligence
+  IJCV:
+    fullname: International Journal of Computer Vision
+paper_collections:
+  - name: Publications
+    id: pub
+    file: publications
+  - name: Dissertations
+    id: diss
+    file: dissertations
+  - name: Technical Reports
+    id: tr
+    file: treports
