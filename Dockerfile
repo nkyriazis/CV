@@ -2,7 +2,7 @@ ARG SELECT=production
 
 ########################################
 # Development stage
-FROM python:3.12-slim as base
+FROM python:3.13-slim as base
 
 # Set the working directory
 WORKDIR /workspace
@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     cmake \
     ninja-build \
     git \
+    texlive-full \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Poetry
