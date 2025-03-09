@@ -178,8 +178,11 @@
 %remove botttom header line
 \renewcommand{\footrulewidth}{0pt}
 
-%remove pagenum
-\renewcommand{\thepage}{}
+% sexy page numbering: show page numbers in the right footer in a stylish way
+\renewcommand{\thepage}{\arabic{page}}
+\fancyfoot[R]{\textsf{\textcolor{sectcol}{\small\textit{Page \thepage}}}}
+% remove default center page numbering
+\fancyfoot[C]{}
 
 %remove section num		
 \renewcommand{\thesection}{}
@@ -259,7 +262,7 @@
 \begin{samepage}
         \vspace{8pt}
         \begin{tabular*}{1\textwidth}{p{2.3cm}  p{8.8cm} x{5.9cm}}
-                \textcolor{bgcol}{ {{- event.date -}} }& \textbf{ {{- event.title -}} } & \vspace{2.5pt}\textcolor{sectcol}{ {{- event.location -}} }
+                \textcolor{bgcol}{ {{- event.date -}} }& \textbf{ {{- event.title -}} } & \vspace{2.5pt}\textcolor{sectcol}{\textit{ {{- event.location -}} }}
 
         \end{tabular*}
         \vspace{-12pt}
