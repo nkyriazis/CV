@@ -1,5 +1,9 @@
 name: Release CV
 
+permissions:
+  contents: write
+  packages: read
+
 on:
   push:
     paths:
