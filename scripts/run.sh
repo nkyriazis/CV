@@ -14,4 +14,8 @@ if [ ! "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
 fi
 
 # Execute the given command in the container
-docker exec -it $CONTAINER_NAME "$@"
+if [ -t 1 ]; then
+    docker exec -it $CONTAINER_NAME "$@"
+else
+    docker exec $CONTAINER_NAME "$@"
+fi
