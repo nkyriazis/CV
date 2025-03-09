@@ -209,9 +209,10 @@ experience:
       - Development of the book editor application, used to generate content for interactive electronic books.
 impact:
   google_scholar:
-    date: 8/3/2025
-    citations: 2824
+    date: 09/03/2025
+    citations: 2829
     h_index: 13
+    i10_index: 15
   details:
     - Impact: "Most cited visual hand tracking paper of all time: ``Efficient model-based 3D tracking of hand articulations using Kinect.'' (\\num{1348} citations)"
 teaching:

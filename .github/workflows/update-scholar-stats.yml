@@ -1,0 +1,59 @@
+name: Update Scholar Stats and Create PR
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-scholar-stats:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Login to github's container registry
+      - name: Login to GitHub Container Registry
+        run: echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Update Scholar Stats
+        run: scripts/cli update-scholar-stats-cli --user-id fUsz0D8AAAAJ --io-file data.yml
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes detected" > no_changes.txt
+          fi
+
+      - name: Commit changes
+        if: steps.check_changes.outputs.no_changes != 'true'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data.yml
+          git commit -m "Update Google Scholar stats"
+
+      - name: Check for existing PR
+        id: check_pr
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data: pullRequests } = await github.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              head: `${context.repo.owner}:update-scholar-stats`
+            });
+            return pullRequests.length > 0;
+
+      - name: Create Pull Request
+        if: steps.check_changes.outputs.no_changes != 'true' && steps.check_pr.outputs.result != 'true'
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Update Google Scholar stats"
+          branch: update-scholar-stats
+          title: "Update Google Scholar stats"
+          body: "This PR updates the Google Scholar stats in data.yml."
+          labels: update, scholar-stats

@@ -103,6 +103,46 @@ def update_cli(
         return 1
 
 
+def update_scholar_stats_cli(*, user_id: str, io_file: Path = Path("data.yml")):
+    from bibscraper.scraper.scholar import ScholarScraper
+    from datetime import datetime
+    import re
+
+    scraper = ScholarScraper(user_id)
+
+    # read the file into memory
+    with io_file.open("r") as f:
+        content = io_file.read_text()
+
+    # Precise edits to yield a minimal diff on disk
+    # Match exactly within impact > google_scholar
+    pattern = r"(impact:\s*\n\s*google_scholar:\s*\n(?:\s+.*\n)+)"
+    match = re.search(pattern, content)
+
+    updates = {
+        "date": datetime.now().strftime("%d/%m/%Y"),
+        "citations": scraper.author["citedby"],
+        "h_index": scraper.author["hindex"],
+        "i10_index": scraper.author["i10index"],
+    }
+
+    if not match:
+        raise ValueError("Could not find the section to update")
+    else:
+        section = match.group(1)
+
+        # Replace each specific field within the matched section
+        for key, val in updates.items():
+            section = re.sub(rf"({key}:\s*)(.*)", rf"\g<1>{val}", section)
+
+        # Replace only the matched section back into the content
+        updated_content = content[: match.start(1)] + section + content[match.end(1) :]
+
+        # Save back
+        with io_file.open("w") as f:
+            f.write(updated_content)
+
+
 def main_scrape():
     """Entry point for bib-scrape command."""
     sys.exit(run(scrape_cli))
@@ -116,3 +156,14 @@ def main_merge():
 def main_update():
     """Entry point for bib-update command."""
     sys.exit(run(update_cli))
+
+
+def main_fetch_scholar_stats():
+    """Entry point for fetch-scholar-stats command."""
+    sys.exit(run(update_scholar_stats_cli))
+
+
+def main():
+    from clize import run
+
+    sys.exit(run(scrape_cli, merge_cli, update_cli, update_scholar_stats_cli))
