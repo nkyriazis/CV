@@ -11,5 +11,5 @@ runs:
   using: "composite"
   steps:
     - name: Run container command
-      run: docker run --rm -v "${{ github.workspace }}:/workspace" ${{ inputs.image }} ${{ inputs.command }}
+      run: docker run --rm -v "${{ github.workspace }}:/workspace" ${{ inputs.image }} -c "${{ inputs.command }}"
       shell: bash
