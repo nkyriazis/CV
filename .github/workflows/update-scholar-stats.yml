@@ -39,12 +39,10 @@ jobs:
 
       - name: Check for existing PR
         id: check_pr
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
-            const crypto = require('crypto');
-
-            const { data: pullRequests } = await github.pulls.list({
+            const { data: pullRequests } = await github.rest.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
@@ -53,7 +51,7 @@ jobs:
 
             let diffHash = '';
             if (pullRequests.length > 0) {
-              const { data: diff } = await github.repos.compareCommits({
+              const { data: diff } = await github.rest.repos.compareCommits({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 base: pullRequests[0].base.sha,
@@ -61,10 +59,12 @@ jobs:
               });
 
               const diffContent = diff.files.map(file => file.patch).join('\n');
+              const crypto = require('crypto');
               diffHash = crypto.createHash('sha256').update(diffContent).digest('hex').substring(0, 8);
             }
 
-            return { hasExistingPR: pullRequests.length > 0, diffHash };
+            core.setOutput('hasExistingPR', pullRequests.length > 0);
+            core.setOutput('diffHash', diffHash);
 
       - name: Create Pull Request
         if: steps.data-updated.outputs.files_changed == 'true' && steps.check_pr.outputs.hasExistingPR != 'true'
