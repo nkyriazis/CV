@@ -42,7 +42,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const context = require('@actions/github').context;
             const crypto = require('crypto');
 
             const { data: pullRequests } = await github.pulls.list({
