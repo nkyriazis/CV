@@ -12,3 +12,4 @@ runs:
   steps:
     - name: Login to GitHub Container Registry
       run: echo "${{ inputs.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ inputs.actor }}" --password-stdin
+      shell: bash

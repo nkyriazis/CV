@@ -12,3 +12,4 @@ runs:
   steps:
     - name: Run container command
       run: docker run --rm -v "${{ github.workspace }}:/workspace" ${{ inputs.image }} ${{ inputs.command }}
+      shell: bash
