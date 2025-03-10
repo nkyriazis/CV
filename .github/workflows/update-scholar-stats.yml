@@ -29,9 +29,6 @@ jobs:
         with:
           files: data.yml
 
-      - name: Debug - Print Changed Files
-        run: "echo 'Files changed: ${{ steps.data-updated.outputs.files_changed }}'" # Debug print
-
       - name: Commit changes
         if: steps.data-updated.outputs.files_changed == 'true'
         run: |
@@ -61,7 +58,13 @@ jobs:
                 head: context.sha
               });
 
-              const diffContent = diff.files.map(file => file.patch).join('\n');
+              const diffContent = diff.files
+                .map(file => file.patch)
+                .join('\n')
+                .split('\n')
+                .filter(line => line.startsWith('+') && !line.startsWith('+++'))
+                .join('\n');
+
               const crypto = require('crypto');
               diffHash = crypto.createHash('sha256').update(diffContent).digest('hex').substring(0, 8);
             }
@@ -71,11 +74,8 @@ jobs:
             core.setOutput('hasExistingPR', existingPR ? 'true' : 'false');
             core.setOutput('diffHash', diffHash);
 
-            console.log('Debug - diffHash:', diffHash); # Debug print
-            console.log('Debug - hasExistingPR:', existingPR ? 'true' : 'false'); # Debug print
-
-      - name: Debug - Print diffHash
-        run: 'echo "diffHash: ${{ steps.check_pr.outputs.diffHash }}"' # Debug print
+      - name: Print computed diff hash
+        run: echo "Computed diff hash ${{ steps.check_pr.outputs.diffHash }}"
 
       - name: Create Pull Request
         if: steps.data-updated.outputs.files_changed == 'true' && steps.check_pr.outputs.hasExistingPR == 'false'
@@ -87,6 +87,3 @@ jobs:
           title: "Update Google Scholar stats (${{ steps.check_pr.outputs.diffHash || 'N/A' }})"
           body: "This PR updates the Google Scholar stats in data.yml."
           labels: update, scholar-stats
-
-      - name: Debug - Print PR creation status
-        run: "echo 'PR created with branch: update-scholar-stats-${{ steps.check_pr.outputs.diffHash || 'default' }}'" # Debug print
