@@ -14,6 +14,8 @@ on:
 jobs:
   setup-steps:
     uses: ./.github/workflows/setup-steps.yml
+    secrets:
+      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
 
   build_tex:
     needs: setup-steps
