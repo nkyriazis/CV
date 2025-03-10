@@ -1,40 +1,28 @@
-ARG SELECT=production
+ARG SELECT=production_no_tex
 
 ########################################
-# Development stage
-FROM python:3.13-slim as base
-
-# Set the working directory
+# Base stages
+FROM python:3.13-slim as base_no_tex
 WORKDIR /workspace
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+RUN pip install poetry \
+    && poetry config virtualenvs.create false
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    cmake \
-    ninja-build \
-    git \
-    texlive-full \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Poetry
-RUN pip install poetry
-
-# Disable virtual environments in Poetry
-RUN poetry config virtualenvs.create false
+FROM base_no_tex as base_tex
+RUN apt-get update && apt-get install -y texlive-full && rm -rf /var/lib/apt/lists/*
 
 ########################################
-# Production stage
-FROM base as production
-
-# Copy everything to /workspace
+# Production stages
+FROM base_no_tex as production_no_tex
 COPY . /workspace
-
-# Install dependencies
 RUN poetry install
+ENTRYPOINT ["/bin/bash"]
 
-# Set the entrypoint to bash
+FROM base_tex as production_tex
+COPY . /workspace
+RUN poetry install
 ENTRYPOINT ["/bin/bash"]
 
 ########################################
-# Selected stage
+# Selected stage: set SELECT to one of: base_no_tex, base_tex, production_no_tex, production_tex
 FROM ${SELECT}
