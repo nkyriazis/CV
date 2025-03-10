@@ -38,6 +38,22 @@ invited_talks:
     - Host: Assistant Prof. Jeanette Bohg (Stanford)
     - Subject: Computational methods for observing and understanding the interaction of human and robotic systems with objects of their environment
 awards:
+  - title: \href{https://www.nvidia.com/}{NVidia} hardware grant
+    date: 2022
+    location: NVidia\textsuperscript{TM}
+    details:
+      - Call: Academic Hardware Grant Program
+      - Proposal: Self-organized multi-camera markerless MOCAP
+      - Award: 8 Jetson Nano 2GB Developer Kits
+
+  - title: BonsAPPs 1st Open Call Highest Scoring AI Talent
+    date: 2022
+    location: \href{https://bonsapps.eu/}{BonsAPPs}
+    details:
+      - Project: CHEIRONOM
+      - Description: Led a team of 2 AI Talents from Greece to improve gesture recognition as a safety feature in the automotive industry.
+      - Reference: \href{https://bonsapps.eu/2022/04/25/meet-the-10-winner-ai-talents/}{Meet the 10 winner AI Talents - BonsAPPs}
+
   - title: Research award from \href{https://tech.facebook.com/reality-labs/}{Facebook Reality Labs}
     date: 2020
     location: Meta\textsuperscript{TM}
@@ -123,6 +139,24 @@ experience:
           Deployment in the cloud,
           Stakeholder engagement,
           Fundraising
+
+  - title: AI Expert - StairwAI Project Participant
+    date: 2022
+    location: \href{https://stairwai.nws.cs.unibo.it/}{StairwAI}
+    details:
+      - Collaborated with \href{https://vertliner.com/}{Vertliner} to develop AI-driven automatic characterization of elevator shaft components during drone inspections.
+      - Participated in StairwAI to enhance AI accessibility for SMEs via the AI-on-Demand platform.
+      - Utilized ML flows for asset inspection and structural integrity assessment.
+
+  - title: AI Talent - BonsAPPs 1st Open Call
+    date: 2022
+    location: \href{https://bonsapps.eu/}{BonsAPPs}
+    details:
+      - Led the development of CHEIRONOM, an AI-driven gesture recognition system for automotive safety.
+      - Collaborated with a team of 2 AI experts to enhance real-time hand gesture recognition models.
+      - Engaged with AI-on-Demand platform and edge AI deployment methodologies.
+      - Built on the \ac{TSM} module.
+      - Ported, compressed and quantized to run efficiently on a Jetson Nano.
 
   - title: Senior Computer Vision Engineer
     date: 2019 - 2024
@@ -352,6 +386,9 @@ acronyms:
     fullname: Transactions on Pattern Analysis and Machine Intelligence
   IJCV:
     fullname: International Journal of Computer Vision
+  TSM:
+    fullname: Temporal Shift Module
+    url: https://github.com/mit-han-lab/temporal-shift-module
 paper_collections:
   - name: Publications
     id: pub

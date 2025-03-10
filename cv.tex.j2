@@ -229,7 +229,7 @@
         \colorbox{sectcol}{\mystrut \makebox[1\linewidth][l]{
                         \larrow{bgcol} \hspace{-8pt} \larrow{bgcol} \hspace{-8pt} \larrow{bgcol} \textcolor{white}{\textbf{#1}}\hspace{4pt}
                 }}\\
-        \nopagebreak
+        \nopagebreak[4]
 }
 
 %create a coloured arrow with title as cv meta section section
@@ -503,7 +503,7 @@
 
 
 {% if loop.first %}
-\metasection{Citations}{\num{ {{ impact.google_scholar.citations }} } citations, h-index: \num{ {{ impact.google_scholar.h_index }} } (Google scholar, last update: {{ impact.google_scholar.date }})}\\
+\metasection{Citations}{\num{ {{ impact.google_scholar.citations }} } citations, h-index: \num{ {{ impact.google_scholar.h_index }} }, i10-index: \num{ {{ impact.google_scholar.i10_index }} }~(Google scholar, last update: {{ impact.google_scholar.date }})}\\
 {% for detail in impact.details %}
 {% for key, value in detail.items() %}
 \metasection{ {{- key -}}}{ {{- value -}} }
