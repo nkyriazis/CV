@@ -49,25 +49,14 @@ jobs:
               head: `${context.repo.owner}:update-scholar-stats`
             });
 
-            let diffHash = '';
-            if (pullRequests.length > 0) {
-              const { data: diff } = await github.rest.repos.compareCommits({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                base: pullRequests[0].base.sha,
-                head: context.sha
-              });
-
-              const diffContent = diff.files
-                .map(file => file.patch)
-                .join('\n')
-                .split('\n')
-                .filter(line => line.startsWith('+') && !line.startsWith('+++'))
-                .join('\n');
-
-              const crypto = require('crypto');
-              diffHash = crypto.createHash('sha256').update(diffContent).digest('hex').substring(0, 8);
-            }
+            const { execSync } = require('child_process');
+            const diffContent = execSync('git diff HEAD~1 HEAD data.yml')
+              .toString()
+              .split('\n')
+              .filter(line => line.startsWith('+') && !line.startsWith('+++'))
+              .join('\n');
+            const crypto = require('crypto');
+            const diffHash = crypto.createHash('sha256').update(diffContent).digest('hex').substring(0, 8);
 
             const existingPR = pullRequests.find(pr => pr.title.includes(diffHash));
 
