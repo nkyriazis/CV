@@ -30,7 +30,7 @@ jobs:
           files: data.yml
 
       - name: Debug - Print Changed Files
-        run: echo "Files changed: ${{ steps.data-updated.outputs.files_changed }}" # Debug print
+        run: "echo 'Files changed: ${{ steps.data-updated.outputs.files_changed }}'" # Debug print
 
       - name: Commit changes
         if: steps.data-updated.outputs.files_changed == 'true'
@@ -75,7 +75,7 @@ jobs:
             console.log('Debug - hasExistingPR:', existingPR ? 'true' : 'false'); # Debug print
 
       - name: Debug - Print diffHash
-        run: echo "diffHash: ${{ steps.check_pr.outputs.diffHash }}" # Debug print
+        run: 'echo "diffHash: ${{ steps.check_pr.outputs.diffHash }}"' # Debug print
 
       - name: Create Pull Request
         if: steps.data-updated.outputs.files_changed == 'true' && steps.check_pr.outputs.hasExistingPR == 'false'
