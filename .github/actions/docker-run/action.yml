@@ -1,0 +1,14 @@
+name: 'Docker Run'
+description: 'Composite action to run a Docker command'
+inputs:
+  image:
+    description: 'Docker image to run'
+    required: true
+  command:
+    description: 'Command to execute in container'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Run container command
+      run: docker run --rm -v "${{ github.workspace }}:/workspace" ${{ inputs.image }} ${{ inputs.command }}

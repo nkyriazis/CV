@@ -1,0 +1,16 @@
+name: 'Setup Steps'
+description: 'Composite action to checkout code and login to GHCR'
+inputs:
+  GHCR_TOKEN:
+    description: 'Token for GHCR login'
+    required: true
+  actor:
+    description: 'GitHub actor'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Login to GitHub Container Registry
+      run: echo "${{ inputs.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ inputs.actor }}" --password-stdin

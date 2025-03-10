@@ -12,22 +12,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  setup-steps:
-    uses: ./.github/workflows/setup-steps.yml
-    secrets:
-      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-
-  build_tex:
-    needs: setup-steps
-    uses: ./.github/workflows/docker-run.yml
-    with:
-      image: ghcr.io/nkyriazis/cv_builder_tex:latest
-      command: ./build.sh
-
-  create_release:
-    needs: build_tex
+  release:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup steps
+        uses: /workspace/.github/actions/setup-steps/action.yml
+        with:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          actor: ${{ github.actor }}
+
+      - name: Build TeX using Docker
+        uses: /workspace/.github/actions/docker-run/action.yml
+        with:
+          image: ghcr.io/nkyriazis/cv_builder_tex:latest
+          command: ./build.sh
+
       - name: Generate timestamp tag
         id: timestamp_tag
         run: echo "::set-output name=timestamp_tag::release-$(date +'%Y%m%d%H%M%S')"
