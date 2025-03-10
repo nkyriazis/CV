@@ -29,6 +29,9 @@ jobs:
         with:
           files: data.yml
 
+      - name: Debug - Print Changed Files
+        run: echo "Files changed: ${{ steps.data-updated.outputs.files_changed }}" # Debug print
+
       - name: Commit changes
         if: steps.data-updated.outputs.files_changed == 'true'
         run: |
@@ -68,6 +71,12 @@ jobs:
             core.setOutput('hasExistingPR', existingPR ? 'true' : 'false');
             core.setOutput('diffHash', diffHash);
 
+            console.log('Debug - diffHash:', diffHash); # Debug print
+            console.log('Debug - hasExistingPR:', existingPR ? 'true' : 'false'); # Debug print
+
+      - name: Debug - Print diffHash
+        run: echo "diffHash: ${{ steps.check_pr.outputs.diffHash }}" # Debug print
+
       - name: Create Pull Request
         if: steps.data-updated.outputs.files_changed == 'true' && steps.check_pr.outputs.hasExistingPR == 'false'
         uses: peter-evans/create-pull-request@v4
@@ -78,3 +87,6 @@ jobs:
           title: "Update Google Scholar stats (${{ steps.check_pr.outputs.diffHash || 'N/A' }})"
           body: "This PR updates the Google Scholar stats in data.yml."
           labels: update, scholar-stats
+
+      - name: Debug - Print PR creation status
+        run: echo "PR created with branch: update-scholar-stats-${{ steps.check_pr.outputs.diffHash || 'default' }}" # Debug print
