@@ -18,6 +18,12 @@ makepdf cv.tex
 bibtex pub
 bibtex diss
 bibtex tr
+
+# in all .bbl files generated, replace Nikolaos Kyriazis with \textbf{Nikolaos Kyriazis}
+sed -i 's/Nikolaos Kyriazis/\\textbf{Nikolaos Kyriazis}/g' pub.bbl
+sed -i 's/Nikolaos Kyriazis/\\textbf{Nikolaos Kyriazis}/g' diss.bbl
+sed -i 's/Nikolaos Kyriazis/\\textbf{Nikolaos Kyriazis}/g' tr.bbl
+
 makepdf cv.tex
 makepdf cv.tex
 
