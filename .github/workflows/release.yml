@@ -19,13 +19,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup steps
-        uses: ./.github/actions/setup-steps/action.yml
+        uses: ./.github/actions/setup-steps
         with:
           GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
           actor: ${{ github.actor }}
 
       - name: Build TeX using Docker
-        uses: ./.github/actions/docker-run/action.yml
+        uses: ./.github/actions/docker-run
         with:
           image: ghcr.io/nkyriazis/cv_builder_tex:latest
           command: ./build.sh
