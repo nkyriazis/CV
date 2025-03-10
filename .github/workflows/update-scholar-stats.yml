@@ -89,4 +89,4 @@ jobs:
           labels: update, scholar-stats
 
       - name: Debug - Print PR creation status
-        run: echo "PR created with branch: update-scholar-stats-${{ steps.check_pr.outputs.diffHash || 'default' }}" # Debug print
+        run: 'echo "PR created with branch: update-scholar-stats-${{ steps.check_pr.outputs.diffHash || 'default' }}"' # Debug print
