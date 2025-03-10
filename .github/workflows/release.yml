@@ -9,6 +9,7 @@ on:
     paths:
       - cv.tex.j2
       - data.yml
+      - "*.bib"
   workflow_dispatch:
 
 jobs:
