@@ -63,7 +63,9 @@ jobs:
               diffHash = crypto.createHash('sha256').update(diffContent).digest('hex').substring(0, 8);
             }
 
-            core.setOutput('hasExistingPR', pullRequests.length > 0);
+            const existingPR = pullRequests.find(pr => pr.title.includes(diffHash));
+
+            core.setOutput('hasExistingPR', existingPR ? 'true' : 'false');
             core.setOutput('diffHash', diffHash);
 
       - name: Create Pull Request
