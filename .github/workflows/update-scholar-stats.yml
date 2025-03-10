@@ -42,21 +42,39 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            const github = require('@actions/github');
+            const context = github.context;
+            const crypto = require('crypto');
+
             const { data: pullRequests } = await github.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
               head: `${context.repo.owner}:update-scholar-stats`
             });
-            return pullRequests.length > 0;
+
+            let diffHash = '';
+            if (pullRequests.length > 0) {
+              const { data: diff } = await github.repos.compareCommits({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                base: pullRequests[0].base.sha,
+                head: context.sha
+              });
+
+              const diffContent = diff.files.map(file => file.patch).join('\n');
+              diffHash = crypto.createHash('sha256').update(diffContent).digest('hex').substring(0, 8);
+            }
+
+            return { hasExistingPR: pullRequests.length > 0, diffHash };
 
       - name: Create Pull Request
-        if: steps.data-updated.outputs.files_changed == 'true' && steps.check_pr.outputs.result != 'true'
+        if: steps.data-updated.outputs.files_changed == 'true' && steps.check_pr.outputs.hasExistingPR != 'true'
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Update Google Scholar stats"
-          branch: update-scholar-stats
-          title: "Update Google Scholar stats"
+          branch: update-scholar-stats-${{ steps.check_pr.outputs.diffHash }}
+          title: "Update Google Scholar stats (${steps.check_pr.outputs.diffHash})"
           body: "This PR updates the Google Scholar stats in data.yml."
           labels: update, scholar-stats
