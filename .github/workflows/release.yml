@@ -24,9 +24,13 @@ jobs:
       - name: Login to GitHub Container Registry
         run: echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      # Run build
-      - name: Build the CV
-        run: ./scripts/run.sh ./build.sh
+      - uses: addnab/docker-run-action@v3
+        with:
+          username: nkyriazis
+          registry: gcr.io
+          image: cv_builder_tex:latest
+          options: -v ${{ github.workspace }}:/workspace
+          run: ./build.sh
 
       # Timestamp tag
       - name: Generate timestamp tag
