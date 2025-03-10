@@ -8,25 +8,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Login to github's container registry
-      - name: Login to GitHub Container Registry
-        run: echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-      - name: Update Scholar Stats
-        run: scripts/run.sh scripts/cli update-scholar-stats-cli --user-id fUsz0D8AAAAJ --io-file data.yml
-
-      - name: diff
-        uses: hyorimitsu/actions-check-diff@v0.0.1
-        id: diff
+      - name: Setup steps
+        uses: ./.github/actions/setup-steps
         with:
-          target-file: data.yml
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          actor: ${{ github.actor }}
+
+      - name: Run the tool that fetches the latest data and updates the file
+        uses: ./.github/actions/docker-run
+        with:
+          image: ghcr.io/nkyriazis/cv_builder:latest
+          command: scripts/cli update-scholar-stats-cli --user-id fUsz0D8AAAAJ --io-file data.yml
+
+      - name: Verify Changed files
+        uses: tj-actions/verify-changed-files@v20
+        id: data-updated
+        with:
+          files: data.yml
 
       - name: Commit changes
-        if: steps.diff.outputs.file-diff > 0
+        if: steps.data-updated.outputs.files_changed == 'true'
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -47,7 +51,7 @@ jobs:
             return pullRequests.length > 0;
 
       - name: Create Pull Request
-        if: steps.diff.outputs.file-diff > 0 && steps.check_pr.outputs.result != 'true'
+        if: steps.data-updated.outputs.files_changed == 'true' && steps.check_pr.outputs.result != 'true'
         uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
