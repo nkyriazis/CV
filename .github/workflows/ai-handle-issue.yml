@@ -51,17 +51,12 @@ jobs:
           fi
           echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER" > issue-body.txt
 
-      - name: Run git status from inside the container to see whether git works
-        uses: ./.github/actions/docker-run
-        with:
-          image: ghcr.io/nkyriazis/cv_builder:latest
-          command: git status
-
       - name: Run the tool that fetches the latest data and updates the file
         uses: ./.github/actions/docker-run
         with:
           image: ghcr.io/nkyriazis/cv_builder:latest
           command: |
+            git status
             git config --global --add safe.directory /workspace
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
