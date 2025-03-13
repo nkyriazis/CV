@@ -21,6 +21,8 @@ jobs:
       - name: Fetch issue details
         if: github.event_name == 'workflow_dispatch'
         id: issue-details
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           ISSUE_ID=${{ github.event.inputs.issue_id }}
           ISSUE_JSON=$(gh api graphql -f query='
