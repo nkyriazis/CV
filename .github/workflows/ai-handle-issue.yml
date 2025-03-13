@@ -32,7 +32,7 @@ jobs:
                   title
                   body
                   number
-                  user {
+                  author {
                     login
                   }
                 }
@@ -46,7 +46,7 @@ jobs:
             ISSUE_TITLE=$(jq -r '.data.node.title' issue-details.json)
             ISSUE_BODY=$(jq -r '.data.node.body' issue-details.json)
             ISSUE_NUMBER=$(jq -r '.data.node.number' issue-details.json)
-            ISSUE_USER=$(jq -r '.data.node.user.login' issue-details.json)
+            ISSUE_USER=$(jq -r '.data.node.author.login' issue-details.json)
           else
             ISSUE_TITLE="${{ github.event.issue.title }}"
             ISSUE_BODY="${{ github.event.issue.body }}"
