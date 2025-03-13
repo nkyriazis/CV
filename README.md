@@ -4,6 +4,8 @@ A Python framework for scraping, merging, and managing BibTeX bibliographies.
 
 ## Features
 
+- Include a section for personal hobbies in the CV template
+
 - Scrape BibTeX entries from academic webpages
 - Handle duplicate entries with intelligent merging algorithms
 - Maintain comprehensive bibliographies with changelogs
