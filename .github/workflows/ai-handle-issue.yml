@@ -49,24 +49,24 @@ jobs:
             ISSUE_NUMBER="${{ github.event.issue.number }}"
             ISSUE_USER="${{ github.event.issue.user.login }}"
           fi
-          echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER\n\nYour Task: Read the issue, understand what is being asked, have a look at the codebase, decide changes, apply changes." > issue-body.txt
-          echo "issue-title=$ISSUE_TITLE" >> $GITHUB_ENV
-          echo "issue-id=$ISSUE_NUMBER" >> $GITHUB_ENV
-          echo "issue-user=$ISSUE_USER" >> $GITHUB_ENV
-          echo "issue-body=$ISSUE_BODY" >> $GITHUB_ENV
+          echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER\n\nYour Task: Read the issue, understand what is being asked, have a look at the codebase, decide changes, apply changes." > ISSUE_BODY.txt
+          echo "ISSUE_TITLE=$ISSUE_TITLE" >> $GITHUB_ENV
+          echo "ISSUE_ID=$ISSUE_NUMBER" >> $GITHUB_ENV
+          echo "ISSUE_USER=$ISSUE_USER" >> $GITHUB_ENV
+          echo "ISSUE_BODY=$ISSUE_BODY" >> $GITHUB_ENV
 
       - name: Print issue details (debugging)
         run: |
-          echo "Issue Title: ${{ steps.issue-info.outputs.issue-title }}"
-          echo "Issue Number: ${{ steps.issue-info.outputs.issue-id }}"
-          echo "Issue User: ${{ steps.issue-info.outputs.issue-user }}"
-          echo "Issue Body: ${{ steps.issue-info.outputs.issue-body }}"
+          echo "Issue Title: ${ISSUE_TITLE}"
+          echo "Issue Number: ${ISSUE_ID}"
+          echo "Issue User: ${ISSUE_USER}"
+          echo "Issue Body: ${ISSUE_BODY}"
 
       - name: Print the issue body (debugging)
-        run: cat issue-body.txt
+        run: cat ISSUE_BODY.txt
 
       - name: Start a new branch
-        run: git checkout -b propose-solution-${{ steps.issue-info.outputs.issue-id }}
+        run: git checkout -b propose-solution-${{ steps.issue-info.outputs.ISSUE_ID }}
 
       - name: Unleash the AI
         uses: ./.github/actions/docker-run
@@ -76,16 +76,7 @@ jobs:
             git config --global --add safe.directory /workspace
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --no-suggest-shell-commands --message-file issue-body.txt
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --no-suggest-shell-commands --message-file ISSUE_BODY.txt
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          commit-message: Propose solution for issue #${{ steps.issue-info.outputs.issue-id }}
-          branch: propose-solution-${{ steps.issue-info.outputs.issue-id }}
-          title: Proposed solution for issue #${{ steps.issue-info.outputs.issue-id }}
-          body: |
-            This PR proposes a solution for the issue #${{ steps.issue-info.outputs.issue-id }}.
-            Please review and provide feedback.
-            Run details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          reviewers: nkyriazis
+        uses: peter-evans/create-pull-request@v7
