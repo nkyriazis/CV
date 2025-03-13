@@ -497,17 +497,6 @@
 {%- endfor %}
 {% raw %}
 
-%---------------------------------------------------------------------------------------
-%	HOBBIES
-%----------------------------------------------------------------------------------------
-\cvsection{Hobbies}
-
-{% endraw %}
-{%- for hobby in hobbies %}
-\larrow{bgcol} {{- hobby -}}\\[6pt]
-{%- endfor %}
-{% raw %}
-
 {% endraw %}
 {% for collection in paper_collections %}
 \cvsection{ {{- collection.name -}} }
