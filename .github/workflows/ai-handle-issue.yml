@@ -49,7 +49,7 @@ jobs:
             ISSUE_NUMBER="${{ github.event.issue.number }}"
             ISSUE_USER="${{ github.event.issue.user.login }}"
           fi
-          echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER\n\nIf you branch out, pick a branch name and write its name on new_branch.txt" > issue-body.txt
+          echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER\n\nIf you branch out, pick a branch name and write its name on /workspace/new_branch.txt" > issue-body.txt
 
       - name: Run the tool that fetches the latest data and updates the file
         uses: ./.github/actions/docker-run
@@ -58,6 +58,7 @@ jobs:
           command: |
             git config --global --add safe.directory /workspace
             git status
+            git branch -a
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --message-file issue-body.txt
