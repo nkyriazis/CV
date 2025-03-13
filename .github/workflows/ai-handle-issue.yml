@@ -21,6 +21,9 @@ jobs:
           ref: master # Change to your base branch if different
           fetch-depth: 0
 
+      - name: Mark the workspace as safe for git otherwise aider fails to do git stuff
+        run: git config --global --add safe.directory "${{ github.workspace }}"
+
       - name: Configure Git
         run: |
           git config --global user.name "github-actions[bot]"
@@ -55,9 +58,6 @@ jobs:
             ISSUE_USER="${{ github.event.issue.user.login }}"
           fi
           echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER" > issue-body.txt
-
-      - name: Mark the workspace as safe for git otherwise aider fails to do git stuff
-        run: git config --global --add safe.directory "${{ github.workspace }}"
 
       - name: Run git status from inside the container to see whether git works
         uses: ./.github/actions/docker-run
