@@ -15,6 +15,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Setup steps
+        uses: ./.github/actions/setup-steps
+        with:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          actor: ${{ github.actor }}
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -34,12 +40,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Setup steps
-        uses: ./.github/actions/setup-steps
-        with:
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-          actor: ${{ github.actor }}
 
       - name: Fetch issue details
         if: github.event_name == 'workflow_dispatch'
