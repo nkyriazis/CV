@@ -78,5 +78,8 @@ jobs:
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --no-suggest-shell-commands --message-file ISSUE_BODY.txt
 
+      - name: Own .git again
+        run: sudo chown -R $USER:$(id -gn) .
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
