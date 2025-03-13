@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   setup-steps:
-    uses: ./.github/workflows/setup-steps.yml
+    uses: ./.github/actions/setup-steps
     secrets:
       GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
 
