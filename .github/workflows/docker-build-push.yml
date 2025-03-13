@@ -8,17 +8,17 @@ permissions:
   contents: read
 
 jobs:
-  setup-steps:
-    uses: ./.github/actions/setup-steps
-    secrets:
-      GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-
   build-and-push:
-    needs: setup-steps
     runs-on: ubuntu-latest
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+
+      - name: Setup steps
+        uses: ./.github/actions/setup-steps
+        with:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          actor: ${{ github.actor }}
 
       - name: Build and push python only image
         uses: docker/build-push-action@v4
