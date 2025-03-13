@@ -24,6 +24,12 @@ jobs:
       - name: Mark the workspace as safe for git otherwise aider fails to do git stuff
         run: git config --global --add safe.directory "${{ github.workspace }}"
 
+      - name: Do that for the container, too
+        uses: ./.github/actions/docker-run
+        with:
+          image: ghcr.io/nkyriazis/cv_builder:latest
+          command: git config --global --add safe.directory /workspace
+
       - name: Configure Git
         run: |
           git config --global user.name "github-actions[bot]"
