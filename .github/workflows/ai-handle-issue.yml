@@ -49,7 +49,7 @@ jobs:
             ISSUE_NUMBER="${{ github.event.issue.number }}"
             ISSUE_USER="${{ github.event.issue.user.login }}"
           fi
-          echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER\n\nYour Task: Read the issue, Understand what is being asked, have a look at the codebase, decide changes, apply changes on a feature branch. Do not defer. I'm expecting a new branch after you're done." > issue-body.txt
+          echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER\n\nYour Task: Read the issue, understand what is being asked, have a look at the codebase, decide changes, apply changes." > issue-body.txt
 
       - name: Print the issue body (debugging)
         run: cat issue-body.txt
@@ -66,18 +66,15 @@ jobs:
             OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --message-file issue-body.txt
             git branch -a
 
-      - name: Find the file and get the name of the current branch (supposedly made by aider)
-        id: branch-name
+      - name: The previous steps will have committed changes. Move them to a new branch
         run: |
-          BRANCH_NAME=$(find . -name "new_branch.txt" -exec cat {} \;)
-          echo "branch-name=$BRANCH_NAME" >> $GITHUB_ENV
-          echo "Current branch: $BRANCH_NAME"  # Added line to print the branch name
+          git checkout -b propose-solution-${{ steps.issue-details.outputs.issue-number }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
           commit-message: Propose solution for issue #${{ steps.issue-details.outputs.issue-number }}
-          branch: ${{ steps.branch-name.outputs.branch-name }}
+          branch: propose-solution-${{ steps.issue-details.outputs.issue-number }}
           title: Proposed solution for issue #${{ steps.issue-details.outputs.issue-number }}
           body: |
             This PR proposes a solution for the issue #${{ steps.issue-details.outputs.issue-number }}.                                                                                                                                                                                                   
