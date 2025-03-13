@@ -64,16 +64,13 @@ jobs:
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --no-suggest-shell-commands --message-file issue-body.txt
+            git log master..HEAD --oneline
 
       - name: Move last commits to new branch
         run: |
-          # Creates a new branch from the current commit (which includes your commits)
           git checkout -b propose-solution-${{ steps.issue-info.outputs.issue-id }}
-
-      - name: Log new branch commits
-        run: |
-          # Log commits in the new branch that differ from master
-          git log master..HEAD --oneline
+          git checkout master
+          git reset --hard origin/master
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
