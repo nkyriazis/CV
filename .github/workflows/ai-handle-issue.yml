@@ -49,7 +49,7 @@ jobs:
             ISSUE_NUMBER="${{ github.event.issue.number }}"
             ISSUE_USER="${{ github.event.issue.user.login }}"
           fi
-          echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER\n\nIf you branch out, pick a branch name and write its name on /workspace/new_branch.txt" > issue-body.txt
+          echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER\n\nCreate a feature branch where you handle the issue and save the branch name at /workspace/new_branch.txt" > issue-body.txt
 
       - name: Run the tool that fetches the latest data and updates the file
         uses: ./.github/actions/docker-run
@@ -68,6 +68,7 @@ jobs:
         run: |
           BRANCH_NAME=$(find . -name "new_branch.txt" -exec cat {} \;)
           echo "branch-name=$BRANCH_NAME" >> $GITHUB_ENV
+          echo "Current branch: $BRANCH_NAME"  # Added line to print the branch name
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
