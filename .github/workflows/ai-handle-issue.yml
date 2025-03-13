@@ -49,7 +49,7 @@ jobs:
             ISSUE_NUMBER="${{ github.event.issue.number }}"
             ISSUE_USER="${{ github.event.issue.user.login }}"
           fi
-          echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER" > issue-body.txt
+          echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER\n\nIf you branch out, pick a branch name and write its name on new_branch.txt" > issue-body.txt
 
       - name: Run the tool that fetches the latest data and updates the file
         uses: ./.github/actions/docker-run
@@ -64,7 +64,9 @@ jobs:
 
       - name: Get the name of the current branch (supposedly made by aider)
         id: branch-name
-        run: echo "branch-name=$(git branch --show-current)" >> $GITHUB_OUTPUT
+        run: |
+          BRANCH_NAME=$(cat new_branch.txt)
+          echo "branch-name=$BRANCH_NAME" >> $GITHUB_ENV
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
