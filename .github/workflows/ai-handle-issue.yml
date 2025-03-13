@@ -65,7 +65,7 @@ jobs:
       - name: Get the name of the current branch (supposedly made by aider)
         id: branch-name
         run: |
-          BRANCH_NAME=$(cat new_branch.txt)
+          BRANCH_NAME=$(cat "${{ github.workspace }}/new_branch.txt")
           echo "branch-name=$BRANCH_NAME" >> $GITHUB_ENV
 
       - name: Create Pull Request
