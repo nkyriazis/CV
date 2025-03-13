@@ -58,15 +58,15 @@ jobs:
           command: |
             git config --global --add safe.directory /workspace
             git status
-            git branch -a
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --message-file issue-body.txt
+            git branch -a
 
-      - name: Get the name of the current branch (supposedly made by aider)
+      - name: Find the file and get the name of the current branch (supposedly made by aider)
         id: branch-name
         run: |
-          BRANCH_NAME=$(cat "${{ github.workspace }}/new_branch.txt")
+          BRANCH_NAME=$(find . -name "new_branch.txt" -exec cat {} \;)
           echo "branch-name=$BRANCH_NAME" >> $GITHUB_ENV
 
       - name: Create Pull Request
