@@ -15,17 +15,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Setup steps
-        uses: ./.github/actions/setup-steps
-        with:
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-          actor: ${{ github.actor }}
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           ref: master # Change to your base branch if different
           fetch-depth: 0
+
+      - name: Setup steps
+        uses: ./.github/actions/setup-steps
+        with:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          actor: ${{ github.actor }}
 
       - name: Mark the workspace as safe for git otherwise aider fails to do git stuff
         run: git config --global --add safe.directory "${{ github.workspace }}"
