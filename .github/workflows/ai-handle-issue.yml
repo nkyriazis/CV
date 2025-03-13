@@ -18,7 +18,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: main # Change to your base branch if different
+          ref: master # Change to your base branch if different
           fetch-depth: 0
 
       - name: Configure Git
