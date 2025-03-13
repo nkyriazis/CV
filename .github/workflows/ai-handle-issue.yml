@@ -11,7 +11,7 @@ on:
 
 jobs:
   propose-solution:
-    if: github.event_name == 'issues' && github.event.label.name == 'ai-solve' && github.event.issue.user.login == 'nkyriazis' || github.event_name == 'workflow_dispatch'
+    if: (github.event_name == 'issues' && github.event.label.name == 'ai-solve' && github.event.issue.user.login == 'nkyriazis') || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +29,6 @@ jobs:
 
       - name: Fetch issue details
         if: github.event_name == 'workflow_dispatch'
-        id: issue-details
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -37,6 +36,7 @@ jobs:
           gh issue view "$ISSUE_ID" --json title,body,number,author --jq '.' > issue-details.json
 
       - name: Create a file that has the issue body
+        id: issue-info
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             ISSUE_TITLE=$(jq -r '.title' issue-details.json)
@@ -50,6 +50,7 @@ jobs:
             ISSUE_USER="${{ github.event.issue.user.login }}"
           fi
           echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER\n\nYour Task: Read the issue, understand what is being asked, have a look at the codebase, decide changes, apply changes." > issue-body.txt
+          echo "issue-id=$ISSUE_NUMBER" >> $GITHUB_ENV
 
       - name: Print the issue body (debugging)
         run: cat issue-body.txt
@@ -60,23 +61,28 @@ jobs:
           image: ghcr.io/nkyriazis/cv_builder:latest
           command: |
             git config --global --add safe.directory /workspace
-            git status
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --message-file issue-body.txt
-            git branch -a
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --message-file --no-suggest-shell-commands issue-body.txt
 
-      - name: The previous steps will have committed changes. Move them to a new branch
+      - name: Move last commits to new branch
         run: |
-          git checkout -b propose-solution-${{ steps.issue-details.outputs.issue-number }}
+          # Creates a new branch from the current commit (which includes your commits)
+          git checkout -b propose-solution-${{ steps.issue-info.outputs.issue-id }}
+
+      - name: Log new branch commits
+        run: |
+          # Log commits in the new branch that differ from master
+          git log master..HEAD --oneline
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          commit-message: Propose solution for issue #${{ steps.issue-details.outputs.issue-number }}
-          branch: propose-solution-${{ steps.issue-details.outputs.issue-number }}
-          title: Proposed solution for issue #${{ steps.issue-details.outputs.issue-number }}
+          commit-message: Propose solution for issue #${{ steps.issue-info.outputs.issue-id }}
+          branch: propose-solution-${{ steps.issue-info.outputs.issue-id }}
+          title: Proposed solution for issue #${{ steps.issue-info.outputs.issue-id }}
           body: |
-            This PR proposes a solution for the issue #${{ steps.issue-details.outputs.issue-number }}.                                                                                                                                                                                                   
+            This PR proposes a solution for the issue #${{ steps.issue-info.outputs.issue-id }}.
             Please review and provide feedback.
+            Run details: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           reviewers: nkyriazis
