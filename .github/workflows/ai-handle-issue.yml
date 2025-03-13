@@ -49,7 +49,7 @@ jobs:
           echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER" > issue-body.txt
 
       - name: Mark the workspace as safe for git otherwise aider fails to do git stuff
-        run: git config --global --add safe.directory "$(pwd)"
+        run: git config --global --add safe.directory "${{ github.workspace }}"
 
       - name: Run the tool that fetches the latest data and updates the file
         uses: ./.github/actions/docker-run
