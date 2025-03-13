@@ -18,6 +18,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Setup steps
+        uses: ./.github/actions/setup-steps
+        with:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          actor: ${{ github.actor }}
+
       - name: Fetch issue details
         if: github.event_name == 'workflow_dispatch'
         id: issue-details
