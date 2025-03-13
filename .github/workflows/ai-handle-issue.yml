@@ -25,28 +25,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           ISSUE_ID=${{ github.event.inputs.issue_id }}
-          ISSUE_JSON=$(gh api graphql -f query='
-            query($number: Int!) {
-              repository(owner: "OWNER", name: "REPO") {
-                issue(number: $number) {
-                  title
-                  body
-                  number
-                  author {
-                    login
-                  }
-                }
-              }
-            }' -f number=$(($ISSUE_ID)))
-          echo "$ISSUE_JSON" > issue-details.json
+          gh issue view "$ISSUE_ID" --json title,body,number,author --jq '.' > issue-details.json
 
       - name: Create a file that has the issue body
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            ISSUE_TITLE=$(jq -r '.data.repository.issue.title' issue-details.json)
-            ISSUE_BODY=$(jq -r '.data.repository.issue.body' issue-details.json)
-            ISSUE_NUMBER=$(jq -r '.data.repository.issue.number' issue-details.json)
-            ISSUE_USER=$(jq -r '.data.repository.issue.author.login' issue-details.json)
+            ISSUE_TITLE=$(jq -r '.title' issue-details.json)
+            ISSUE_BODY=$(jq -r '.body' issue-details.json)
+            ISSUE_NUMBER=$(jq -r '.number' issue-details.json)
+            ISSUE_USER=$(jq -r '.author.login' issue-details.json)
           else
             ISSUE_TITLE="${{ github.event.issue.title }}"
             ISSUE_BODY="${{ github.event.issue.body }}"
