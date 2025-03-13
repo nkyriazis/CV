@@ -49,7 +49,7 @@ jobs:
             ISSUE_NUMBER="${{ github.event.issue.number }}"
             ISSUE_USER="${{ github.event.issue.user.login }}"
           fi
-          echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER\n\nCreate a feature branch where you handle the issue and save the branch name at /workspace/new_branch.txt" > issue-body.txt
+          echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER\n\nYour Task: Read the issue, Understand what is being asked, have a look at the codebase, decide changes, apply changes on a feature branch. Do not defer. I'm expecting a new branch after you're done." > issue-body.txt
 
       - name: Run the tool that fetches the latest data and updates the file
         uses: ./.github/actions/docker-run
