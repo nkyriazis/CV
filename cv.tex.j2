@@ -494,28 +494,10 @@
 \larrow{bgcol} \textbf{ {{- language -}}: } {{- data.level -}}, ({{- ', '.join(data.justifications) -}})\\[6pt]
 {%- endfor %}
 {% raw %}
-
-%---------------------------------------------------------------------------------------
-%	HOBBIES
-%----------------------------------------------------------------------------------------
-\cvsection{Hobbies}
-
-{% endraw %}
-{%- for hobby in hobbies %}
-\larrow{bgcol} {{- hobby -}}\\[6pt]
 {%- endfor %}
 {% raw %}
 
-%---------------------------------------------------------------------------------------
-%	HOBBIES
-%----------------------------------------------------------------------------------------
-\cvsection{Hobbies}
-
 {% endraw %}
-{%- for hobby in hobbies %}
-\larrow{bgcol} {{- hobby -}}\\[6pt]
-{%- endfor %}
-{% raw %}
 {% for collection in paper_collections %}
 \cvsection{ {{- collection.name -}} }
 
