@@ -52,7 +52,7 @@ jobs:
         uses: ./.github/actions/docker-run
         with:
           image: ghcr.io/nkyriazis/cv_builder:latest
-          command: OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --mesage-file issue-body.txt
+          command: OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --message-file issue-body.txt
 
       - name: Get the name of the current branch (supposedly made by aider)
         id: branch-name
