@@ -63,7 +63,7 @@ jobs:
             git config --global --add safe.directory /workspace
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --message-file --no-suggest-shell-commands issue-body.txt
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --no-suggest-shell-commands --message-file issue-body.txt
 
       - name: Move last commits to new branch
         run: |
