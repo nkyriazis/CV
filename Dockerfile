@@ -15,12 +15,18 @@ RUN apt-get update && apt-get install -y texlive-full && rm -rf /var/lib/apt/lis
 # Production stages
 FROM base_no_tex as production_no_tex
 COPY . /workspace
-RUN poetry install
+
+ENV PATH="/root/.local/bin:$PATH"
+RUN poetry install && aider-install
+
 ENTRYPOINT ["/bin/bash"]
 
 FROM base_tex as production_tex
 COPY . /workspace
-RUN poetry install
+
+ENV PATH="/root/.local/bin:$PATH"
+RUN poetry install && aider-install
+
 ENTRYPOINT ["/bin/bash"]
 
 ########################################
