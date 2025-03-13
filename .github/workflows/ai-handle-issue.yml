@@ -56,8 +56,8 @@ jobs:
         with:
           image: ghcr.io/nkyriazis/cv_builder:latest
           command: |
-            git status
             git config --global --add safe.directory /workspace
+            git status
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --message-file issue-body.txt
