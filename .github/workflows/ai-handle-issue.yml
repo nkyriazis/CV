@@ -3,18 +3,55 @@ name: AI Solve Issue
 on:
   issues:
     types: [labeled]
+  workflow_dispatch:
+    inputs:
+      issue_id:
+        description: "The ID of the issue to process"
+        required: true
 
 jobs:
   propose-solution:
-    if: github.event.label.name == 'ai-solve' && github.event.issue.user.login == 'nkyriazis'
+    if: github.event_name == 'issues' && github.event.label.name == 'ai-solve' && github.event.issue.user.login == 'nkyriazis' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Fetch issue details
+        if: github.event_name == 'workflow_dispatch'
+        id: issue-details
+        run: |
+          ISSUE_ID=${{ github.event.inputs.issue_id }}
+          ISSUE_JSON=$(gh api graphql -f query='
+            query($id: ID!) {
+              node(id: $id) {
+                ... on Issue {
+                  title
+                  body
+                  number
+                  user {
+                    login
+                  }
+                }
+              }
+            }' -f id=$ISSUE_ID)
+          echo "$ISSUE_JSON" > issue-details.json
+
       - name: Create a file that has the issue body
-        run: echo "Try to address the following issue on a new feature branch:\n\n${{ github.event.issue.body }}" > issue-body.txt
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            ISSUE_TITLE=$(jq -r '.data.node.title' issue-details.json)
+            ISSUE_BODY=$(jq -r '.data.node.body' issue-details.json)
+            ISSUE_NUMBER=$(jq -r '.data.node.number' issue-details.json)
+            ISSUE_USER=$(jq -r '.data.node.user.login' issue-details.json)
+          else
+            ISSUE_TITLE="${{ github.event.issue.title }}"
+            ISSUE_BODY="${{ github.event.issue.body }}"
+            ISSUE_NUMBER="${{ github.event.issue.number }}"
+            ISSUE_USER="${{ github.event.issue.user.login }}"
+          fi
+          echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER" > issue-body.txt
 
       - name: Run the tool that fetches the latest data and updates the file
         uses: ./.github/actions/docker-run
@@ -29,10 +66,10 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          commit-message: Propose solution for issue #${{ github.event.issue.number }}
+          commit-message: Propose solution for issue #${{ steps.issue-details.outputs.issue-number }}
           branch: ${{ steps.branch-name.outputs.branch-name }}
-          title: Proposed solution for issue #${{ github.event.issue.number }}
+          title: Proposed solution for issue #${{ steps.issue-details.outputs.issue-number }}
           body: |
-            This PR proposes a solution for the issue #${{ github.event.issue.number }}.                                                                                                                                                                                                   
+            This PR proposes a solution for the issue #${{ steps.issue-details.outputs.issue-number }}.                                                                                                                                                                                                   
             Please review and provide feedback.
           reviewers: nkyriazis
