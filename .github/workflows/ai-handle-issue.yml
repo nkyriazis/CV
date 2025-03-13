@@ -1,0 +1,38 @@
+name: AI Solve Issue
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  propose-solution:
+    if: github.event.label.name == 'ai-solve' && github.event.issue.user.login == 'nkyriazis'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create a file that has the issue body
+        run: echo "Try to address the following issue on a new feature branch:\n\n${{ github.event.issue.body }}" > issue-body.txt
+
+      - name: Run the tool that fetches the latest data and updates the file
+        uses: ./.github/actions/docker-run
+        with:
+          image: ghcr.io/nkyriazis/cv_builder:latest
+          command: OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --mesage-file issue-body.txt
+
+      - name: Get the name of the feature (current) branch
+        id: branch-name
+        run: echo "::set-output name=branch-name::ai-solution-${{ github.event.issue.number }}"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: Propose solution for issue #${{ github.event.issue.number }}
+          branch: ${{ steps.branch-name.outputs.branch-name }}
+          title: Proposed solution for issue #${{ github.event.issue.number }}
+          body: |
+            This PR proposes a solution for the issue #${{ github.event.issue.number }}.                                                                                                                                                                                                   
+            Please review and provide feedback.
+          reviewers: nkyriazis
