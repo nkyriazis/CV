@@ -37,7 +37,7 @@ jobs:
                   }
                 }
               }
-            }' -f number=$ISSUE_ID)
+            }' -f number=$(($ISSUE_ID)))
           echo "$ISSUE_JSON" > issue-details.json
 
       - name: Create a file that has the issue body
