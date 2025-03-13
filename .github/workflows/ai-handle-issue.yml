@@ -66,7 +66,7 @@ jobs:
         run: cat ISSUE_BODY.txt
 
       - name: Start a new branch
-        run: git checkout -b propose-solution-${{ steps.issue-info.outputs.ISSUE_ID }}
+        run: git checkout -b propose-solution-${{ env.ISSUE_ID }}
 
       - name: Unleash the AI
         uses: ./.github/actions/docker-run
@@ -81,5 +81,11 @@ jobs:
       - name: Own .git again
         run: sudo chown -R $USER:$(id -gn) .
 
+      - name: Push branch to remote
+        run: |
+          git push origin propose-solution-${{ env.ISSUE_ID }}
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
+        with:
+          branch: propose-solution-${{ env.ISSUE_ID }}
