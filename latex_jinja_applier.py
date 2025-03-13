@@ -29,6 +29,10 @@ def parse_args():
         '--context', type=str,
         help="Path to a JSON file containing context variables."
     )
+    parser.add_argument(
+        '--hobbies', type=str, nargs='*',
+        help="List of hobbies to include in the CV."
+    )
     return parser.parse_args()
 
 def main():
