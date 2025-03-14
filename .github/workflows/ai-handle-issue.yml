@@ -66,6 +66,7 @@ jobs:
         run: cat ISSUE_BODY.txt
 
       - name: Unleash the AI
+        id: unleash-ai
         uses: ./.github/actions/docker-run
         with:
           image: ghcr.io/nkyriazis/cv_builder:latest
@@ -75,10 +76,8 @@ jobs:
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --no-suggest-shell-commands --no-auto-commits --message-file ISSUE_BODY.txt | tee AIDER_OUTPUT.txt
 
-      - name: Move aider output to a variable
-        run: |
-          AIDER_OUTPUT=$(cat AIDER_OUTPUT.txt)
-          echo "AIDER_OUTPUT=$AIDER_OUTPUT" >> $GITHUB_ENV
+      - name: Capture aider output
+        run: echo "AIDER_OUTPUT=\"$(cat AIDER_OUTPUT.txt)\"" >> $GITHUB_ENV
 
       - name: Remove things we don't want on the PR
         run: rm ISSUE_BODY.txt AIDER_OUTPUT.txt issue-details.json
@@ -87,6 +86,9 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           title: "AI Solution Proposal for Issue #${{ env.ISSUE_ID }}"
-          body: "# AI-generated solution proposal for issue #${{ env.ISSUE_ID }} (see [run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}))\n ${{ env.AIDER_OUTPUT }}"
+          body: |
+            # AI-generated solution proposal for issue #${{ env.ISSUE_ID }} (see [run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}))
+
+            ${{ env.AIDER_OUTPUT }}
           reviewers: nkyriazis
           token: ${{ secrets.GITHUB_TOKEN }}
