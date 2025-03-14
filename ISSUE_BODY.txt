@@ -1,0 +1,10 @@
+Issue Title: Add Hobies
+
+Issue Body:
+It would be useful to have a hobbies section. What kind of hobbies do you think I have?
+
+Issue Number: 8
+
+Issue User: nkyriazis
+
+Your Task: Read the issue, understand what is being asked, have a look at the codebase, decide changes, apply changes.
