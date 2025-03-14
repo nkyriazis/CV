@@ -399,3 +399,11 @@ paper_collections:
   - name: Technical Reports
     id: tr
     file: treports
+
+hobbies:
+  - name: Photography
+    description: Capturing moments and landscapes through the lens.
+  - name: Hiking
+    description: Exploring nature trails and enjoying outdoor adventures.
+  - name: Reading
+    description: Engaging with a variety of genres, from fiction to science.
