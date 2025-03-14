@@ -85,12 +85,15 @@ jobs:
         run: |
           git push origin propose-solution-${{ env.ISSUE_ID }}
 
+      - name: Reset working directory
+        run: git reset --hard HEAD
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
           branch: propose-solution-${{ env.ISSUE_ID }}
           base: master
           title: "AI Solution Proposal for Issue #${{ env.ISSUE_ID }}"
-          body: "This is an AI-generated solution proposal for issue #${{ env.ISSUE_ID }}. Please review and merge if it makes sense. Action run link: ${{ github.run_id }}"
+          body: "This is an AI-generated solution proposal for issue #${{ env.ISSUE_ID }}. Please review and merge if it makes sense. Action run link: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           reviewers: nkyriazis
           token: ${{ secrets.GITHUB_TOKEN }}
