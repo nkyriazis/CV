@@ -45,8 +45,10 @@ jobs:
           echo "\nOriginal Issue Description:" >> CONVERSATION.txt
           echo "${{ github.event.issue.body }}" >> CONVERSATION.txt
           echo "\nConversation History:" >> CONVERSATION.txt
+          touch last_comment.txt
           for comment in "${ISSUE_COMMENTS[@]}"; do
             echo "\n${comment}" >> CONVERSATION.txt
+            echo "${comment}" > last_comment.txt
           done
           echo "\nDon't scrape urls unless you are asked explicitly." >> CONVERSATION.txt
 
@@ -66,7 +68,7 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git add . ':!CONVERSATION.txt' ':!AIDER_OUTPUT.txt'
+          git add . ':!CONVERSATION.txt' ':!AIDER_OUTPUT.txt' ':!last_comment.txt'
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "AI updates based on instructions"
             git push
@@ -76,8 +78,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh issue comment ${{ github.event.issue.number }} --body-file AIDER_OUTPUT.txt
           if [ -n "$(git status --porcelain)" ]; then
-            echo "${{ env.PR_BODY }}\n\n[AI] Updates:\n${{ env.AIDER_OUTPUT }}" > PR_BODY_UPDATE.txt
-            gh pr edit ${{ github.event.pull_request.number }} --body-file PR_BODY_UPDATE.txt
+            gh issue comment ${{ github.event.issue.number }} --body "> $(cat last_comment.txt)\n\nAI has updated the PR description."
           fi
