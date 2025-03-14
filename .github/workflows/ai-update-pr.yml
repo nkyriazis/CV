@@ -13,6 +13,12 @@ jobs:
         with:
           ref: master
 
+      - name: Setup steps
+        uses: ./.github/actions/setup-steps
+        with:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          actor: ${{ github.actor }}
+
       - name: Extract PR information
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
