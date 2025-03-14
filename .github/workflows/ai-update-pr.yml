@@ -27,18 +27,14 @@ jobs:
 
       - name: Gather conversation history
         run: |
-          ISSUE_COMMENTS=$(github.issues.listComments({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            issue_number: ${{ github.event.issue.number }}
-          }).data)
+          ISSUE_COMMENTS=$(gh api repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/comments --jq '.[].body')
 
           echo "Issue Title: ${{ github.event.issue.title }}" > CONVERSATION.txt
           echo "\nOriginal Issue Description:" >> CONVERSATION.txt
-          echo "$(${{ github.event.issue.body }})" >> CONVERSATION.txt
+          echo "${{ github.event.issue.body }}" >> CONVERSATION.txt
           echo "\nConversation History:" >> CONVERSATION.txt
           for comment in "${ISSUE_COMMENTS[@]}"; do
-            echo "\n${comment.user.login}: ${comment.body}" >> CONVERSATION.txt
+            echo "\n${comment}" >> CONVERSATION.txt
           done
 
       - name: Generate AI instructions
@@ -73,7 +69,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ github.event.issue.number }},
-              body: "[AI] Response:\n\n$(${{ env.AIDER_OUTPUT }})"
+              body: "[AI] Response:\n\n${{ env.AIDER_OUTPUT }}"
             })
 
             # If there are code changes, update the PR description
@@ -82,6 +78,6 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: ${{ github.event.pull_request.number }},
-                body: "$(${{ env.PR_BODY }})\n\n[AI] Updates:\n$(${{ env.AIDER_OUTPUT }})"
+                body: "${{ env.PR_BODY }}\n\n[AI] Updates:\n${{ env.AIDER_OUTPUT }}"
               })
             fi
