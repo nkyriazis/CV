@@ -77,7 +77,10 @@ jobs:
 
       - name: Update PR description
         run: |
-          gh issue comment ${{ github.event.issue.number }} --body "[AI] Response:\n\n${{ env.AIDER_OUTPUT }}"
+          echo "[AI] Response:\n\n${{ env.AIDER_OUTPUT }}" > AI_RESPONSE.txt
+          gh issue comment ${{ github.event.issue.number }} --body-file AI_RESPONSE.txt
           if [ -n "$(git status --porcelain)" ]; then
-            gh pr edit ${{ github.event.pull_request.number }} --body "${{ env.PR_BODY }}\n\n[AI] Updates:\n${{ env.AIDER_OUTPUT }}"
+            echo "${{ env.PR_BODY }}\n\n[AI] Updates:\n${{ env.AIDER_OUTPUT }}" > PR_BODY_UPDATE.txt
+            gh pr edit ${{ github.event.pull_request.number }} --body-file PR_BODY_UPDATE.txt
           fi
+          rm AI_RESPONSE.txt PR_BODY_UPDATE.txt
