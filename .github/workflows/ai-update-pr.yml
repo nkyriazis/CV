@@ -6,6 +6,7 @@ on:
 
 jobs:
   update-pr:
+    if: contains(github.event.comment.body, '/ai-solve')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -75,30 +76,8 @@ jobs:
           fi
 
       - name: Update PR description
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { owner, repo } = context.repo;
-            const issue_number = ${{ github.event.issue.number }};
-            const pull_number = ${{ github.event.pull_request.number }};
-            const aiResponse = "[AI] Response:\n\n${{ env.AIDER_OUTPUT }}";
-            const aiUpdates = "${{ env.PR_BODY }}\n\n[AI] Updates:\n${{ env.AIDER_OUTPUT }}";
-
-            // Update the original issue with AI response
-            await github.issues.createComment({
-              owner,
-              repo,
-              issue_number,
-              body: aiResponse
-            });
-
-            // If there are code changes, update the PR description
-            if (await git.status() !== '') {
-              await github.pulls.update({
-                owner,
-                repo,
-                pull_number,
-                body: aiUpdates
-              });
-            }
+        run: |
+          gh issue comment ${{ github.event.issue.number }} --body "[AI] Response:\n\n${{ env.AIDER_OUTPUT }}"
+          if [ -n "$(git status --porcelain)" ]; then
+            gh pr edit ${{ github.event.pull_request.number }} --body "${{ env.PR_BODY }}\n\n[AI] Updates:\n${{ env.AIDER_OUTPUT }}"
+          fi
