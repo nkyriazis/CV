@@ -62,6 +62,7 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "AI updates based on instructions"
             git push --force-with-lease origin ${{ github.event.pull_request.head.ref }}
+          fi
 
       - name: Update PR description
         env:
@@ -72,4 +73,3 @@ jobs:
             echo "${{ env.PR_BODY }}\n\n[AI] Updates:\n${{ env.AIDER_OUTPUT }}" > PR_BODY_UPDATE.txt
             gh pr edit ${{ github.event.pull_request.number }} --body-file PR_BODY_UPDATE.txt
           fi
-          rm AI_RESPONSE.txt PR_BODY_UPDATE.txt
