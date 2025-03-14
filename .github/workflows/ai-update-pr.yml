@@ -79,20 +79,26 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            # Update the original issue with AI response
-            github.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: ${{ github.event.issue.number }},
-              body: "[AI] Response:\n\n${{ env.AIDER_OUTPUT }}"
-            })
+            const { owner, repo } = context.repo;
+            const issue_number = ${{ github.event.issue.number }};
+            const pull_number = ${{ github.event.pull_request.number }};
+            const aiResponse = "[AI] Response:\n\n${{ env.AIDER_OUTPUT }}";
+            const aiUpdates = "${{ env.PR_BODY }}\n\n[AI] Updates:\n${{ env.AIDER_OUTPUT }}";
 
-            # If there are code changes, update the PR description
-            if [ -n "$(git status --porcelain)" ]; then
-              github.issues.updatePullRequest({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: ${{ github.event.pull_request.number }},
-                body: "${{ env.PR_BODY }}\n\n[AI] Updates:\n${{ env.AIDER_OUTPUT }}"
-              })
-            fi
+            // Update the original issue with AI response
+            await github.issues.createComment({
+              owner,
+              repo,
+              issue_number,
+              body: aiResponse
+            });
+
+            // If there are code changes, update the PR description
+            if (await git.status() !== '') {
+              await github.pulls.update({
+                owner,
+                repo,
+                pull_number,
+                body: aiUpdates
+              });
+            }
