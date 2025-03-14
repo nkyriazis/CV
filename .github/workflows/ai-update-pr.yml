@@ -51,6 +51,7 @@ jobs:
             echo "${comment}" > last_comment.txt
           done
           echo "\nDon't scrape urls unless you are asked explicitly." >> CONVERSATION.txt
+          echo "LAST_COMMENT=$(cat last_comment.txt)" >> $GITHUB_ENV
 
       - name: Generate AI instructions
         uses: ./.github/actions/docker-run
@@ -79,7 +80,7 @@ jobs:
         with:
           file: reply.txt
           content: |
-            > $(cat last_comment.txt)
+            > ${{ env.LAST_COMMENT }}
 
             AI has updated the PR description.
 
