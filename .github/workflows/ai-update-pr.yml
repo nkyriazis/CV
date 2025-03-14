@@ -1,0 +1,87 @@
+name: AI Update Pull Request
+
+on:
+  pull_request_target:
+    types: [opened]
+
+jobs:
+  update-pr:
+    if: github.event_name == 'pull_request_target' && github.event.action == 'created'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Extract PR information
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          PR_BODY="${{ github.event.pull_request.body }}"
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+          echo "PR_BODY=$PR_BODY" >> $GITHUB_ENV
+
+      - name: Create a new branch for AI updates
+        run: |
+          git checkout -b ai-updates/${{ github.event.number }}
+
+      - name: Gather conversation history
+        run: |
+          ISSUE_COMMENTS=$(github.issues.listComments({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: ${{ github.event.issue.number }}
+          }).data)
+
+          echo "Issue Title: ${{ github.event.issue.title }}" > CONVERSATION.txt
+          echo "\nOriginal Issue Description:" >> CONVERSATION.txt
+          echo "$(${{ github.event.issue.body }})" >> CONVERSATION.txt
+          echo "\nConversation History:" >> CONVERSATION.txt
+          for comment in "${ISSUE_COMMENTS[@]}"; do
+            echo "\n${comment.user.login}: ${comment.body}" >> CONVERSATION.txt
+          done
+
+      - name: Generate AI instructions
+        uses: ./.github/actions/docker-run
+        with:
+          image: ghcr.io/nkyriazis/cv_builder:latest
+          command: |
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --no-suggest-shell-commands --no-auto-commits --no-check-update --message-file CONVERSATION.txt | tee AIDER_OUTPUT.txt
+
+      - name: Capture aider output
+        run: |
+          AIDER_OUTPUT=$(cat AIDER_OUTPUT.txt)
+          echo "AIDER_OUTPUT<<EOF" >> $GITHUB_ENV
+          echo "$AIDER_OUTPUT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Commit and push changes
+        run: |
+          git add .
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "AI updates based on instructions"
+            git push --force-with-lease origin ai-updates/${{ github.event.number }}
+          fi
+
+      - name: Update PR description
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            # Update the original issue with AI response
+            github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.issue.number }},
+              body: "[AI] Response:\n\n$(${{ env.AIDER_OUTPUT }})"
+            })
+
+            # If there are code changes, update the PR description
+            if [ -n "$(git status --porcelain)" ]; then
+              github.issues.updatePullRequest({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: ${{ github.event.pull_request.number }},
+                body: "$(${{ env.PR_BODY }})\n\n[AI] Updates:\n$(${{ env.AIDER_OUTPUT }})"
+              })
+            fi
