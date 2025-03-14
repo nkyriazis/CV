@@ -84,7 +84,7 @@ jobs:
           echo "EOF" >> $GITHUB_ENV
 
       - name: Remove things we don't want on the PR
-        run: rm ISSUE_BODY.txt AIDER_OUTPUT.txt issue-details.json
+        run: rm -f ISSUE_BODY.txt AIDER_OUTPUT.txt issue-details.json
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
