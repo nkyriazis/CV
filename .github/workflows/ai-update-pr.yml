@@ -76,6 +76,8 @@ jobs:
           fi
 
       - name: Update PR description
+        env:
+          GJ_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "[AI] Response:\n\n${{ env.AIDER_OUTPUT }}" > AI_RESPONSE.txt
           gh issue comment ${{ github.event.issue.number }} --body-file AI_RESPONSE.txt
