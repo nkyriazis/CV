@@ -6,7 +6,7 @@ on:
 
 jobs:
   update-pr:
-    if: contains(github.event.comment.body, '/ai-solve')
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/ai-run') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
