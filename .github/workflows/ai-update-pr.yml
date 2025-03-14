@@ -29,7 +29,9 @@ jobs:
       - name: Create a new branch for AI updates
         run: |
           UNIQUE_ID=$(date +%s)
-          git checkout -b ai-updates/$UNIQUE_ID
+          BRANCH_NAME=ai-updates/$UNIQUE_ID
+          git checkout -b $BRANCH_NAME
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
       - name: Gather conversation history
         env:
@@ -60,12 +62,16 @@ jobs:
           echo "$AIDER_OUTPUT" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
+      - name: Remove helper files
+        run: |
+          rm CONVERSATION.txt AIDER_OUTPUT.txt
+
       - name: Commit and push changes
         run: |
           git add .
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "AI updates based on instructions"
-            git push --force-with-lease origin ai-updates/${{ github.event.number }}
+            git push --force-with-lease origin $BRANCH_NAME
           fi
 
       - name: Update PR description
