@@ -22,7 +22,8 @@ jobs:
 
       - name: Create a new branch for AI updates
         run: |
-          git checkout -b ai-updates/${{ github.event.number }}
+          UNIQUE_ID=$(date +%s)
+          git checkout -b ai-updates/$UNIQUE_ID
 
       - name: Gather conversation history
         run: |
