@@ -28,12 +28,17 @@ def scrape_cli(*, url: str, output: str, verbose: bool = False):
     if verbose:
         logger.setLevel(logging.DEBUG)
 
-    try:
-        entries = scrape_from_url(url, Path(output))
+    confirm = input(f"Do you want to scrape the URL: {url}? (yes/no): ").strip().lower()
+    if confirm == 'yes':
+        try:
+            entries = scrape_from_url(url, Path(output))
+            return 0
+        except Exception as e:
+            logger.error(f"Error scraping entries: {e}")
+            return 1
+    else:
+        logger.info("Scraping aborted by user.")
         return 0
-    except Exception as e:
-        logger.error(f"Error scraping entries: {e}")
-        return 1
 
 
 def merge_cli(
