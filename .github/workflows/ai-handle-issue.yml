@@ -77,7 +77,11 @@ jobs:
             OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --no-suggest-shell-commands --no-auto-commits --message-file ISSUE_BODY.txt | tee AIDER_OUTPUT.txt
 
       - name: Capture aider output
-        run: echo "AIDER_OUTPUT=\"$(cat AIDER_OUTPUT.txt)\"" >> $GITHUB_ENV
+        run: |
+          AIDER_OUTPUT=$(cat AIDER_OUTPUT.txt)
+          echo "AIDER_OUTPUT<<EOF" >> $GITHUB_ENV
+          echo "$AIDER_OUTPUT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Remove things we don't want on the PR
         run: rm ISSUE_BODY.txt AIDER_OUTPUT.txt issue-details.json
