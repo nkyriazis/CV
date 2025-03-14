@@ -92,7 +92,5 @@ jobs:
           title: "AI Solution Proposal for Issue #${{ env.ISSUE_ID }}"
           body: |
             # AI-generated solution proposal for issue #${{ env.ISSUE_ID }} (see [run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}))
-
-            ${{ env.AIDER_OUTPUT }}
           reviewers: nkyriazis
           token: ${{ secrets.GITHUB_TOKEN }}
