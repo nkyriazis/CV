@@ -19,6 +19,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh pr checkout ${{ github.event.issue.number }}
 
+      - name: Print branches (debugging)
+        run: git branch -a
+
       - name: Setup steps
         uses: ./.github/actions/setup-steps
         with:
