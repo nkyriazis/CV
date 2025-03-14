@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: master
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Setup steps
         uses: ./.github/actions/setup-steps
@@ -26,13 +26,6 @@ jobs:
           PR_BODY="${{ github.event.pull_request.body }}"
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
           echo "PR_BODY=$PR_BODY" >> $GITHUB_ENV
-
-      - name: Create a new branch for AI updates
-        run: |
-          UNIQUE_ID=$(date +%s)
-          BRANCH_NAME=ai-updates/$UNIQUE_ID
-          git checkout -b $BRANCH_NAME
-          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
       - name: Gather conversation history
         env:
@@ -72,8 +65,7 @@ jobs:
           git add .
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "AI updates based on instructions"
-            git push --force-with-lease origin $BRANCH_NAME
-          fi
+            git push --force-with-lease origin ${{ github.event.pull_request.head.ref }}
 
       - name: Update PR description
         env:
