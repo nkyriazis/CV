@@ -44,6 +44,7 @@ jobs:
           for comment in "${ISSUE_COMMENTS[@]}"; do
             echo "\n${comment}" >> CONVERSATION.txt
           done
+          echo "\nDon't scrape urls unless you are asked explicitly." >> CONVERSATION.txt
 
       - name: Generate AI instructions
         uses: ./.github/actions/docker-run
