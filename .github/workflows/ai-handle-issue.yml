@@ -1,25 +1,20 @@
-name: AI Solve Issue
+name: AI Issue Handler
 
 on:
   issues:
     types: [labeled]
-  workflow_dispatch:
-    inputs:
-      issue_id:
-        description: "The ID of the issue to process"
-        required: true
+  pull_request_target:
+    types: [opened]
 
 jobs:
   propose-solution:
-    if: (github.event_name == 'issues' && github.event.label.name == 'ai-solve' && github.event.issue.user.login == 'nkyriazis') || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'issues' && github.event.label.name == 'ai-solve'
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: master # Change to your base branch if different
-          fetch-depth: 0
+          ref: main
 
       - name: Setup steps
         uses: ./.github/actions/setup-steps
@@ -27,28 +22,13 @@ jobs:
           GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
           actor: ${{ github.actor }}
 
-      - name: Fetch issue details
-        if: github.event_name == 'workflow_dispatch'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          ISSUE_ID=${{ github.event.inputs.issue_id }}
-          gh issue view "$ISSUE_ID" --json title,body,number,author --jq '.' > issue-details.json
-
       - name: Create a file that has the issue body
         id: issue-info
         run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            ISSUE_TITLE=$(jq -r '.title' issue-details.json)
-            ISSUE_BODY=$(jq -r '.body' issue-details.json)
-            ISSUE_NUMBER=$(jq -r '.number' issue-details.json)
-            ISSUE_USER=$(jq -r '.author.login' issue-details.json)
-          else
-            ISSUE_TITLE="${{ github.event.issue.title }}"
-            ISSUE_BODY="${{ github.event.issue.body }}"
-            ISSUE_NUMBER="${{ github.event.issue.number }}"
-            ISSUE_USER="${{ github.event.issue.user.login }}"
-          fi
+          ISSUE_TITLE="${{ github.event.issue.title }}"
+          ISSUE_BODY="${{ github.event.issue.body }}"
+          ISSUE_NUMBER="${{ github.event.issue.number }}"
+          ISSUE_USER="${{ github.event.issue.user.login }}"
           echo -e "Issue Title: $ISSUE_TITLE\n\nIssue Body:\n$ISSUE_BODY\n\nIssue Number: $ISSUE_NUMBER\n\nIssue User: $ISSUE_USER\n\nYour Task: Read the issue, understand what is being asked, have a look at the codebase, decide changes, apply changes." > ISSUE_BODY.txt
           echo "ISSUE_TITLE=$ISSUE_TITLE" >> $GITHUB_ENV
           echo "ISSUE_ID=$ISSUE_NUMBER" >> $GITHUB_ENV
@@ -96,3 +76,41 @@ jobs:
             ${{ env.AIDER_OUTPUT }}
           reviewers: nkyriazis
           token: ${{ secrets.GITHUB_TOKEN }}
+
+  update-pr:
+    if: github.event_name == 'pull_request_target' && contains(github.event.pull_request.body, '[AI] ')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Extract PR information
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          PR_BODY="${{ github.event.pull_request.body }}"
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+          echo "PR_BODY=$PR_BODY" >> $GITHUB_ENV
+
+      - name: Update PR based on AI instructions
+        uses: ./.github/actions/docker-run
+        with:
+          image: ghcr.io/nkyriazis/cv_builder:latest
+          command: |
+            git config --global --add safe.directory /workspace
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --no-suggest-shell-commands --no-auto-commits --no-check-update --message-file PR_INSTRUCTIONS.txt | tee AIDER_OUTPUT.txt
+
+      - name: Update PR
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.updatePullRequest({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: parseInt(context.props.PR_NUMBER),
+              body: `${context.props.PR_BODY}\n\n[AI] Updated based on instructions:\n${context.props.AIDER_OUTPUT}`
+            })
