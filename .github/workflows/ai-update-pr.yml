@@ -9,6 +9,11 @@ jobs:
     if: ${{ github.event.issue.pull_request != null }}
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Checkout PR branch using gh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
