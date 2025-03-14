@@ -65,9 +65,6 @@ jobs:
       - name: Print the issue body (debugging)
         run: cat ISSUE_BODY.txt
 
-      - name: Start a new branch
-        run: git checkout -b propose-solution-${{ env.ISSUE_ID }}
-
       - name: Unleash the AI
         uses: ./.github/actions/docker-run
         with:
@@ -76,24 +73,20 @@ jobs:
             git config --global --add safe.directory /workspace
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --no-suggest-shell-commands --message-file ISSUE_BODY.txt
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --no-suggest-shell-commands --no-auto-commits --message-file ISSUE_BODY.txt | tee AIDER_OUTPUT.txt
 
-      - name: Own .git again
-        run: sudo chown -R $USER:$(id -gn) .
-
-      - name: Push branch to remote
+      - name: Move aider output to a variable
         run: |
-          git push origin propose-solution-${{ env.ISSUE_ID }}
+          AIDER_OUTPUT=$(cat AIDER_OUTPUT.txt)
+          echo "AIDER_OUTPUT=$AIDER_OUTPUT" >> $GITHUB_ENV
 
-      - name: Reset working directory
-        run: git reset --hard HEAD
+      - name: Remove things we don't want on the PR
+        run: rm ISSUE_BODY.txt AIDER_OUTPUT.txt issue-details.json
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: propose-solution-${{ env.ISSUE_ID }}
-          base: master
           title: "AI Solution Proposal for Issue #${{ env.ISSUE_ID }}"
-          body: "This is an AI-generated solution proposal for issue #${{ env.ISSUE_ID }}. Please review and merge if it makes sense. Action run link: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          body: "# AI-generated solution proposal for issue #${{ env.ISSUE_ID }} (see [run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}))\n ${{ env.AIDER_OUTPUT }}"
           reviewers: nkyriazis
           token: ${{ secrets.GITHUB_TOKEN }}
