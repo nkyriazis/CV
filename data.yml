@@ -332,6 +332,12 @@ review_conferences:
   - IEEE/CVF \ac{ICCV}
   - IEEE \ac{ICRA}
   - IEEE Computer Society Workshop on Observing and understanding hands in action (HANDS 2015 in conjunction with CVPR 2015, HANDS 2016 in conjunction with CVPR 2016)
+hobbies:
+  - Hiking
+  - Photography
+  - Reading
+  - Traveling
+
 languages:
   Greek:
     level: excellent
