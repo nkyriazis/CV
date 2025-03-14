@@ -74,7 +74,7 @@ jobs:
             git config --global --add safe.directory /workspace
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --no-suggest-shell-commands --no-auto-commits --message-file ISSUE_BODY.txt | tee AIDER_OUTPUT.txt
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} aider --model gpt-4o --yes-always --no-suggest-shell-commands --no-auto-commits --no-check-update --message-file ISSUE_BODY.txt | tee AIDER_OUTPUT.txt
 
       - name: Capture aider output
         run: |
