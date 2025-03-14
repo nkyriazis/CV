@@ -56,13 +56,9 @@ jobs:
           echo "$AIDER_OUTPUT" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-      - name: Remove helper files
-        run: |
-          rm CONVERSATION.txt AIDER_OUTPUT.txt
-
       - name: Commit and push changes
         run: |
-          git add .
+          git add . ':!CONVERSATION.txt' ':!AIDER_OUTPUT.txt'
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "AI updates based on instructions"
             git push --force-with-lease origin ${{ github.event.pull_request.head.ref }}
@@ -71,8 +67,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "[AI] Response:\n\n${{ env.AIDER_OUTPUT }}" > AI_RESPONSE.txt
-          gh issue comment ${{ github.event.issue.number }} --body-file AI_RESPONSE.txt
+          gh issue comment ${{ github.event.issue.number }} --body-file AIDER_OUTPUT.txt
           if [ -n "$(git status --porcelain)" ]; then
             echo "${{ env.PR_BODY }}\n\n[AI] Updates:\n${{ env.AIDER_OUTPUT }}" > PR_BODY_UPDATE.txt
             gh pr edit ${{ github.event.pull_request.number }} --body-file PR_BODY_UPDATE.txt
