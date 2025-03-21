@@ -43,8 +43,8 @@ awards:
     location: \ac{ICS} \ac{FORTH}
     details:
       - Honnourable mention: Led a high-scoring proposal for \ac{ICS} \ac{FORTH} Internal Research Programme; selected for funding but \textbf{not awarded} due to emerged institutional conflict of interest.
-      - Proposal: AI-driven NeRF and Diffusion Model-based generative systems for architectural workflows
-      - Technologies: Radiance Fields, Diffusion Models, \acp{LLM}
+      - Proposal: AI-driven \ac{NERF} and \ac{DM}-based generative systems for architectural workflows
+      - Technologies: \acp{RF}, \acp{DM}, \acp{LLM}
   - title: \href{https://www.nvidia.com/}{NVidia} hardware grant
     date: 2022
     location: NVidia\textsuperscript{TM}
@@ -400,6 +400,12 @@ acronyms:
     fullname: Large Language Model
   GNERF:
     fullname: \textbf{G}enerative \textbf{N}eural \textbf{E}state \textbf{R}adiance \textbf{F}ields
+  RF:
+    fullname: Radiance Field
+  NERF:
+    fullname: Neural \ac{RF}
+  DM:
+    fullname: Diffusion Model
 paper_collections:
   - name: Publications
     id: pub
