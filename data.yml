@@ -38,6 +38,13 @@ invited_talks:
     - Host: Assistant Prof. Jeanette Bohg (Stanford)
     - Subject: Computational methods for observing and understanding the interaction of human and robotic systems with objects of their environment
 awards:
+  - title: \ac{GNERF}
+    date: 2023
+    location: \ac{ICS} \ac{FORTH}
+    details:
+      - Honnourable mention: Led a high-scoring proposal for \ac{ICS} \ac{FORTH} Internal Research Programme; selected for funding but \textbf{not awarded} due to emerged institutional conflict of interest.
+      - Proposal: AI-driven NeRF and Diffusion Model-based generative systems for architectural workflows
+      - Technologies: Radiance Fields, Diffusion Models, \acp{LLM}
   - title: \href{https://www.nvidia.com/}{NVidia} hardware grant
     date: 2022
     location: NVidia\textsuperscript{TM}
@@ -389,6 +396,10 @@ acronyms:
   TSM:
     fullname: Temporal Shift Module
     url: https://github.com/mit-han-lab/temporal-shift-module
+  LLM:
+    fullname: Large Language Model
+  GNERF:
+    fullname: \textbf{G}enerative \textbf{N}eural \textbf{E}state \textbf{R}adiance \textbf{F}ields
 paper_collections:
   - name: Publications
     id: pub
