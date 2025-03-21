@@ -339,6 +339,46 @@ review_conferences:
   - IEEE/CVF \ac{ICCV}
   - IEEE \ac{ICRA}
   - IEEE Computer Society Workshop on Observing and understanding hands in action (HANDS 2015 in conjunction with CVPR 2015, HANDS 2016 in conjunction with CVPR 2016)
+media_mentions:
+  - title: Tracking the Articulated Motion of Human Hands in 3D
+    date: 2013-10
+    location: ERCIM News
+    details:
+      - Description: Article in ERCIM News \#95 co-authored by Dr. Kyriazis
+      - Focus: Real-time, model-based 3D hand tracking
+      - URL: \href{https://ercim-news.ercim.eu/en95/special/tracking-the-articulated-motion-of-human-hands-in-3d}{ercim-news.ercim.eu}
+
+  - title: \"Greek\" Vision in Robots
+    date: 2013-02-09
+    location: Kathimerini
+    details:
+      - Highlight: Real-time hand tracking using Kinect
+      - Context: Work by FORTH team awarded in international competition
+      - URL: \href{http://www.kathimerini.gr/480388/article/oikonomia/die8nhs-oikonomia/ellhnikh-orash-se-rompot}{kathimerini.gr}
+
+  - title: International distinctions for FORTH researchers
+    date: 2013-01-17
+    location: EKT (National Documentation Centre)
+    details:
+      - Achievement: First place in the Gesture Recognition Challenge at ICPR 2012
+      - Contribution: Vision-based software by Dr. Kyriazis and collaborators
+      - URL: \href{http://www.ekt.gr/content/display?prnbr=86290}{ekt.gr}
+
+  - title: Journey to the Future
+    date: 2012-11-28
+    location: Haniotika Nea
+    details:
+      - Feature: Front-page and in-depth coverage
+      - Topic: Gesture recognition system by the FORTH team
+      - URL: \href{https://www.haniotika-nea.gr/}{haniotika-nea.gr}
+
+  - title: Ambient Intelligence from Crete
+    date: 2012-01-30
+    location: To Vima
+    details:
+      - Overview: Smart environments and human-centered systems at FORTH
+      - Relevance: Includes work related to Dr. Kyriazis
+      - URL: \href{http://www.tovima.gr/science/article/?aid=440355}{tovima.gr}
 languages:
   Greek:
     level: excellent
