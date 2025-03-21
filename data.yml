@@ -38,12 +38,12 @@ invited_talks:
     - Host: Assistant Prof. Jeanette Bohg (Stanford)
     - Subject: Computational methods for observing and understanding the interaction of human and robotic systems with objects of their environment
 awards:
-  - title: \ac{GNERF}
+  - title: Honorable Mention for Research Grant
     date: 2023
     location: \ac{ICS} \ac{FORTH}
     details:
-      - Honnourable mention: Led a high-scoring proposal for \ac{ICS} \ac{FORTH} Internal Research Programme; selected for funding but \textbf{not awarded} due to emerged institutional conflict of interest.
-      - Proposal: AI-driven \ac{NERF} and \ac{DM}-based generative systems for architectural workflows
+      - Proposal: "\\ac{GNERF}: AI-driven \\ac{NERF} and \\ac{DM}-based generative systems for architectural workflows"
+      - Qualitification: External expert reviews, short-listed with high score, not awarded due to conflict-of-interest constraints
       - Technologies: \acp{RF}, \acp{DM}, \acp{LLM}
   - title: \href{https://www.nvidia.com/}{NVidia} hardware grant
     date: 2022
