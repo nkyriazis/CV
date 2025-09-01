@@ -146,20 +146,8 @@ def update_scholar_stats_cli(*, user_id: str, io_file: Path = Path("data.yml")):
         
     except ScholarFetchException as e:
         logger.error(f"Failed to fetch Google Scholar data: {e}")
-        
-        # Use fallback strategy: keep existing data but update date to indicate attempt
-        if current_scholar_data:
-            logger.info("Using fallback strategy: preserving existing data")
-            updates = {
-                "date": datetime.now().strftime("%d/%m/%Y"),
-                "citations": current_scholar_data.get("citations", 0),
-                "h_index": current_scholar_data.get("h_index", 0),
-                "i10_index": current_scholar_data.get("i10_index", 0),
-            }
-            logger.info(f"Fallback data preserved: {updates}")
-        else:
-            logger.error("No existing data available for fallback")
-            raise ValueError("Cannot fetch new data and no existing data available for fallback") from e
+        logger.info("No changes will be made to the data file since Google Scholar fetch failed")
+        return  # Exit without modifying the file
     
     except Exception as e:
         logger.error(f"Unexpected error during Scholar data fetch: {e}")
