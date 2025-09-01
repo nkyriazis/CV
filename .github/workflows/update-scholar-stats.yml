@@ -25,12 +25,24 @@ jobs:
         with:
           image: ghcr.io/nkyriazis/cv_builder:latest
           command: scripts/cli update-scholar-stats-cli --user-id fUsz0D8AAAAJ --io-file data.yml
+        continue-on-error: false
 
       - name: Verify Changed files
         uses: tj-actions/verify-changed-files@v20
         id: data-updated
         with:
           files: data.yml
+        continue-on-error: true
+
+      - name: Show file changes status
+        run: |
+          echo "Files changed: ${{ steps.data-updated.outputs.files_changed }}"
+          if [[ "${{ steps.data-updated.outputs.files_changed }}" == "true" ]]; then
+            echo "Data file was updated - showing diff:"
+            git diff data.yml || echo "Could not show diff"
+          else
+            echo "No changes detected in data.yml (possibly using fallback data)"
+          fi
 
       - name: Commit changes
         if: steps.data-updated.outputs.files_changed == 'true'

@@ -104,43 +104,96 @@ def update_cli(
 
 
 def update_scholar_stats_cli(*, user_id: str, io_file: Path = Path("data.yml")):
-    from bibscraper.scraper.scholar import ScholarScraper
+    """Update Google Scholar statistics with robust error handling and fallbacks."""
+    from bibscraper.scraper.scholar import ScholarScraper, ScholarFetchException
     from datetime import datetime
     import re
+    import yaml
 
-    scraper = ScholarScraper(user_id)
+    logger.info(f"Starting Google Scholar stats update for user {user_id}")
 
-    # read the file into memory
-    with io_file.open("r") as f:
-        content = io_file.read_text()
+    # Read the current file content
+    try:
+        with io_file.open("r") as f:
+            content = io_file.read_text()
+            
+        # Parse the YAML to get current values as fallback
+        data = yaml.safe_load(content)
+        current_scholar_data = data.get("impact", {}).get("google_scholar", {})
+        logger.info(f"Current Scholar data: {current_scholar_data}")
+        
+    except Exception as e:
+        logger.error(f"Failed to read or parse {io_file}: {e}")
+        raise ValueError(f"Could not read or parse the data file {io_file}") from e
 
-    # Precise edits to yield a minimal diff on disk
-    # Match exactly within impact > google_scholar
-    pattern = r"(impact:\s*\n\s*google_scholar:\s*\n(?:\s+.*\n)+)"
-    match = re.search(pattern, content)
+    # Try to fetch new data from Google Scholar
+    try:
+        scraper = ScholarScraper(user_id)
+        citation_stats = scraper.get_citation_stats()
+        
+        # Validate the fetched data
+        if not citation_stats or not any(citation_stats.values()):
+            raise ScholarFetchException("Fetched data appears to be empty or invalid")
+            
+        updates = {
+            "date": datetime.now().strftime("%d/%m/%Y"),
+            "citations": citation_stats["citedby"],
+            "h_index": citation_stats["hindex"],
+            "i10_index": citation_stats["i10index"],
+        }
+        
+        logger.info(f"Successfully fetched new Scholar data: {updates}")
+        
+    except ScholarFetchException as e:
+        logger.error(f"Failed to fetch Google Scholar data: {e}")
+        
+        # Use fallback strategy: keep existing data but update date to indicate attempt
+        if current_scholar_data:
+            logger.info("Using fallback strategy: preserving existing data")
+            updates = {
+                "date": datetime.now().strftime("%d/%m/%Y"),
+                "citations": current_scholar_data.get("citations", 0),
+                "h_index": current_scholar_data.get("h_index", 0),
+                "i10_index": current_scholar_data.get("i10_index", 0),
+            }
+            logger.info(f"Fallback data preserved: {updates}")
+        else:
+            logger.error("No existing data available for fallback")
+            raise ValueError("Cannot fetch new data and no existing data available for fallback") from e
+    
+    except Exception as e:
+        logger.error(f"Unexpected error during Scholar data fetch: {e}")
+        raise
 
-    updates = {
-        "date": datetime.now().strftime("%d/%m/%Y"),
-        "citations": scraper.author["citedby"],
-        "h_index": scraper.author["hindex"],
-        "i10_index": scraper.author["i10index"],
-    }
+    # Update the file content with precise edits to yield minimal diff
+    try:
+        # Match exactly within impact > google_scholar
+        pattern = r"(impact:\s*\n\s*google_scholar:\s*\n(?:\s+.*\n)+)"
+        match = re.search(pattern, content)
 
-    if not match:
-        raise ValueError("Could not find the section to update")
-    else:
+        if not match:
+            raise ValueError("Could not find the google_scholar section to update")
+        
         section = match.group(1)
+        logger.debug(f"Found section to update: {repr(section)}")
 
         # Replace each specific field within the matched section
+        updated_section = section
         for key, val in updates.items():
-            section = re.sub(rf"({key}:\s*)(.*)", rf"\g<1>{val}", section)
+            updated_section = re.sub(rf"({key}:\s*)(.*)", rf"\g<1>{val}", updated_section)
 
         # Replace only the matched section back into the content
-        updated_content = content[: match.start(1)] + section + content[match.end(1) :]
+        updated_content = content[:match.start(1)] + updated_section + content[match.end(1):]
 
-        # Save back
+        # Save back to file
         with io_file.open("w") as f:
             f.write(updated_content)
+            
+        logger.info(f"Successfully updated {io_file} with Scholar stats")
+
+    except Exception as e:
+        logger.error(f"Failed to update file {io_file}: {e}")
+        raise ValueError(f"Could not update the data file {io_file}") from e
 
 
 def main_scrape():
