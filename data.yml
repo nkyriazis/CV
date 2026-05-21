@@ -146,7 +146,15 @@ experience:
           Deployment in the cloud,
           Stakeholder engagement,
           Fundraising
-
+  
+  - title: Technical Coordinator, AI Engineer - SEAVISTA
+    date: 2026
+    location: \href{https://bonsapps.eu/}{BonsAPPs}
+    details:
+      - Funded by Frontex Research
+      - Led the development of SEAVISTA, a maritime awareness system that capitalizes on AI
+      - Involves Computer Vision, Machine Learning, Simulation and Agentic AI
+    
   - title: AI Expert - StairwAI Project Participant
     date: 2022
     location: \href{https://stairwai.nws.cs.unibo.it/}{StairwAI}
