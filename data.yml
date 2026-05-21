@@ -166,11 +166,11 @@ experience:
       - Ported, compressed and quantized to run efficiently on a Jetson Nano.
 
   - title: Senior Computer Vision Engineer
-    date: 2019 - 2024
+    date: 2019 - 2026
     location: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
     details:
-      - Conducted and published research in the field of Computer Vision, regarding 3D tracking of hands and objects in interaction.
-      - Research was conducted in and supported by EU-funded projects, under the supervision and with the collaboration of Professor A. Argyros.
+      - Conducted and published research in the field of Computer Vision, regarding 3D tracking of hands and objects in interaction, \ac{AI}, Spatial Computing and Situational Awareness.
+      - Research was conducted in and supported by EU-funded projects and personal awards.
 
   - title: Computer Vision Engineer
     date: 2017 - 2019
