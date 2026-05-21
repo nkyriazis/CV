@@ -149,7 +149,7 @@ experience:
   
   - title: Technical Coordinator, AI Engineer - SEAVISTA
     date: 2026
-    location: \href{https://bonsapps.eu/}{BonsAPPs}
+    location: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
     details:
       - Funded by Frontex Research
       - Led the development of SEAVISTA, a maritime awareness system that capitalizes on AI
