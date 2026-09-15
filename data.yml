@@ -43,7 +43,7 @@ awards:
     location: \ac{ICS} \ac{FORTH}
     details:
       - Proposal: "\\ac{GNERF}: AI-driven \\ac{NERF} and \\ac{DM}-based generative systems for architectural workflows"
-      - Qualitification: External expert reviews, short-listed with high score, not awarded due to conflict-of-interest constraints
+      - Qualification: External expert reviews, short-listed with high score, not awarded due to conflict-of-interest constraints
       - Technologies: \acp{RF}, \acp{DM}, \acp{LLM}
   - title: \href{https://www.nvidia.com/}{NVidia} hardware grant
     date: 2022
@@ -393,7 +393,7 @@ languages:
     justifications: [native speaker]
   English:
     level: excellent
-    justifications: [full professional proficiency, Michican Proficiency Certificate]
+    justifications: [full professional proficiency, Michigan Proficiency Certificate]
   French:
     level: good
     justifications: [D.E.L.F.]
@@ -401,6 +401,8 @@ acronyms:
   CVRL:
     url: http://www.ics.forth.gr/cvrl/
     fullname: Computer Vision and Robotics Laboratory
+  AI:
+    fullname: Artificial Intelligence
   ICS:
     url: http://www.ics.forth.gr/
     fullname: Institute of Computer Science
