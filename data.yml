@@ -135,11 +135,14 @@ education:
       - Minor: Information Systems
 experience:
   - title: Co-founder and CEO
-    date: 2023 - now
+    date: 2023 -- 2026
     location: \href{https://www.sceneopsis.com}{SceneOpsis}
     details:
-      - Leading the democratization of spatial computing for the proliferation of remote appreciation.
-      - Involved in operations and pushing the envelope on contemporary structure for motion, photogrammetry, and novel view synthesis (radiance fields).
+      - Co-founded and ran a 3D reconstruction service built on Gaussian splatting --- capture with a phone, reconstruct on distributed GPUs, walk through the result in a browser.
+      - Pose estimation - Built pyARBA, a C++20 modelling layer on Ceres and TBB. Its cost-function \ac{DSL} never triangulates and anneals under graduated non-convexity, refining the pose prior of phone \ac{AR} directly and keeping every pose, at the cost of a standard \ac{SfM} pass (\href{https://arxiv.org/abs/2608.21008}{arXiv, 2026}).
+      - Reconstruction - Made Gaussian splatting hold up on real capture rather than benchmark scenes, through depth supervision, deblurring and the fusion of ARCore data, atop Nerfstudio.
+      - Capture - Wrote the Unity ARCore capture application, for users who were never going to be experts.
+      - Commercial - Customer discovery, pilots, and the slow business of learning what people would pay for. Traction came first and investor interest followed from it, up to soft commitments from angel investors.
       - Skillset and responsibilities: |
           Leadership and management,
           End-to-end tooling (full-stack development),
@@ -155,8 +158,10 @@ experience:
     location: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
     details:
       - Funded by Frontex Research
-      - Led the development of SEAVISTA, a maritime awareness system that capitalizes on AI
-      - Involves Computer Vision, Machine Learning, Simulation and Agentic AI
+      - Technical lead of \href{https://seavista.eu}{SEAVISTA}, a 12-month maritime situational awareness programme, delivered in August 2026
+      - Every deliverable was accepted on first pass, with a closing assessment of ``beyond expectations''
+      - Involves Computer Vision, Machine Learning, Simulation and Agentic \ac{AI}
+      - Directed a small team, and built the real-time core
     
   - title: AI Expert - StairwAI Project Participant
     date: 2022 -- 2023
@@ -181,26 +186,34 @@ experience:
     location: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
     details:
       - Conducted and published research in the field of Computer Vision, regarding 3D tracking of hands and objects in interaction, \ac{AI}, Spatial Computing and Situational Awareness.
+      - Research line - Introduced and co-developed a line of work on texture as a first-class supervision signal for 3D hand pose, through successive student collaborations.
+      - Method - Built the differentiable rasterisation and ray-tracing refinement that cut \ac{MANO} joint error from roughly 5mm to 1.96mm (\href{https://nkyriazis.github.io/publications/Karvounas21}{BMVC 2021}), extended in follow-up work (\href{https://nkyriazis.github.io/publications/Karvounas2023}{ICCVW 2023}).
+      - Adoption - Texture priors compiled from partial in-the-wild pixels now supervise \href{https://geopavlakos.github.io/hamer}{HaMeR}, with PCK@0.10 gains on egocentric benchmarks, largest on occluded joints (\href{https://nkyriazis.github.io/publications/Karvounas2026wacv}{WACV 2026}).
       - Research was conducted in and supported by EU-funded projects and personal awards.
 
   - title: Computer Vision Engineer
     date: 2017 - 2019
     location: Oculus VR--Meta\textsuperscript{TM}
     details:
-      - Pushed the envelope in real-time robust 3D hand tracking, in the context of Virtual Reality (VR), combining deep-learning and model-based methods.
+      - Worked on real-time robust 3D hand tracking for Virtual Reality, combining deep-learning and model-based methods, on the team taking it to consumer headsets.
+      - Recruited into the problem itself - the real-time articulated hand tracker built during my Ph.D. was already in use in the field, as a source of ground truth among other things, and this was that same problem at product scale.
+      - The work was articulated pose estimation and the optimisation underneath it, with the C++ and Python engineering around it.
 
   - title: Postdoctoral researcher
     date: 2014 - 2016
     location: \ac{CVRL}, \ac{ICS}, \ac{FORTH}
     details:
       - Conducted and published research in the field of Computer Vision, regarding 3D tracking of hands and objects in interaction.
+      - Co-authored EU proposals that were funded, and led FORTH's technical work packages on RoboHow, WEARHAP and RAPID.
+      - Delivered the first markerless 3D hand tracking able to train robots on human demonstration, and hand-object tracking that made contact-force estimation possible from vision alone (\href{https://nkyriazis.github.io/publications/pham2018hand}{TPAMI 2018}).
+      - Ported real-time 27-\ac{DOF} hand tracking onto RAPID's Java edge-offloading framework, where low-end mobile devices matched a high-end GPU over Gigabit and WiFi (\href{https://nkyriazis.github.io/publications/qammaz2018distributed}{MobiSys 2018}).
       - Research was conducted in and supported by EU-funded projects, under the supervision and with the collaboration of Professor A. Argyros.
 
   - title: Internship
     date: 2013
     location: \ac{DRZ}
     details:
-      - Contributed in acquisition and representation of real-world data, towards the development of algorithms that leverage this data to generate stunning visual effects.
+      - Built a C++ template-metaprogramming layer that collapsed a verbose binding \ac{API}, with compile-time reflection generating the boilerplate, so that C++ functions could be exposed declaratively to internal \ac{GUI} tools for rapid prototyping.
       - Supervised by \href{mailto:thabo.beeler@disneyresearch.com}{Dr. Thabo Beeler}, in the \href{http://www.disneyresearch.com/research-labs/disney-research-zurich/dr-zurich-capture-effects/}{Capture \& Effects} laboratory.
       - Gained experience in new tools and methodologies regarding high-fidelity performance capture.
 
@@ -210,6 +223,9 @@ experience:
     details:
       - Postgraduate scholarships covering M.Sc. and Ph.D. studies.
       - Conducted and published research in Computer Vision and Machine Learning, focusing on 3D tracking of hands and objects in interaction and grammar induction.
+      - Ph.D. - Built the first real-time 3D hand tracker, and MBV, the CUDA and graphics engine underneath it - GPU-resident batched render-and-score with zero-copy CUDA to Direct3D/OpenGL interop, custom shaders, geometry instancing and a custom GPU multi-scan, driving \ac{PSO} and \ac{DE} optimisation (\href{https://nkyriazis.github.io/publications/OikonomidisKyriazisArgyros2011b}{BMVC 2011}). The research line was later taken up at labs including Meta, Microsoft Research and Magic Leap.
+      - Ph.D. - Extended the work to markerless hand-object tracking (\href{https://nkyriazis.github.io/publications/OikonomidisKyriazisArgyros2012a}{CVPR 2012}--\href{https://nkyriazis.github.io/publications/KyriazisArgyros2013a}{2013}) and to Synergy Tracker, an ensemble tracking 159 degrees of freedom at the speed of independent trackers (\href{https://nkyriazis.github.io/publications/KyriazisArgyros2014a}{CVPR 2014}).
+      - M.Sc. - Reduced context-free grammar parsing to inference on a 2D Markov random field, leaving the parse tree implicit on a depth-by-position grid rather than searched for explicitly.
       - Research was conducted in and supported by EU-funded projects, under the supervision and with the collaboration of Professor A. Argyros.
 
   - title: \href{http://rapid-project.eu/}{RAPID}
@@ -401,6 +417,24 @@ languages:
     level: good
     justifications: [D.E.L.F.]
 acronyms:
+  API:
+    fullname: Application Programming Interface
+  AR:
+    fullname: Augmented Reality
+  DE:
+    fullname: Differential Evolution
+  DOF:
+    fullname: Degrees of Freedom
+  DSL:
+    fullname: Domain-Specific Language
+  GUI:
+    fullname: Graphical User Interface
+  MANO:
+    fullname: hand Model with Articulated and Non-rigid defOrmations
+  PSO:
+    fullname: Particle Swarm Optimisation
+  SfM:
+    fullname: Structure from Motion
   CVRL:
     url: http://www.ics.forth.gr/cvrl/
     fullname: Computer Vision and Robotics Laboratory
